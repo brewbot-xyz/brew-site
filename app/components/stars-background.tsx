@@ -1,7 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
 import React, {
-  useState,
   useEffect,
   useRef,
   RefObject,
@@ -33,7 +32,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
   maxTwinkleSpeed = 1,
   className,
 }) => {
-  const [stars, setStars] = useState<StarProps[]>([]);
+  const starsRef = useRef<StarProps[] | null>(null);
   const canvasRef: RefObject<HTMLCanvasElement | null> =
     useRef<HTMLCanvasElement>(null);
 
@@ -75,7 +74,10 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
         const { width, height } = canvas.getBoundingClientRect();
         canvas.width = width;
         canvas.height = height;
-        setStars(generateStars(width, height));
+
+        if (!starsRef.current) {
+          starsRef.current = generateStars(width, height);
+        }
       }
     };
 
@@ -111,7 +113,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
 
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      stars.forEach((star) => {
+      starsRef.current?.forEach((star) => {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
@@ -132,7 +134,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [stars]);
+  }, []);
 
   return (
     <canvas

@@ -5,9 +5,12 @@ import { cn } from "@/lib/utils"
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
     <div
         ref={ref}
-        className={cn("rounded-2xl border border-card-accent bg-card text-card-foreground shadow-sm", className)}
+        className={cn("relative inline-flex items-center gap-3 bg-gradient-to-r from-primary/50 to-primary-accent/50 rounded-3xl backdrop-blur-md")}
         {...props}
-    />
+    >
+        <div className="absolute inset-[1px] bg-background/50 rounded-3xl"></div>
+        <div className={cn("place-self-start p-6 space-y-1 text-sm z-10 text-primary-foreground/75", className)}>{props.children}</div>
+    </div>
 ))
 Card.displayName = "Card"
 

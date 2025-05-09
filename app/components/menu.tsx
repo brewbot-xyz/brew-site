@@ -32,7 +32,7 @@ export const HoveredLink = ({
     <Link
       {...rest}
       className={cn(
-        "cursor-pointer text-foreground transition-colors hover:text-primary-foreground",
+        "cursor-pointer text-foreground transition-colors hover:text-primary-accent backdrop-blur-sm backdrop-brightness-50 rounded-full p-3",
         className
       )}
     >

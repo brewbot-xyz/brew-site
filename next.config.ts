@@ -8,12 +8,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         hostname: "cdn.discordapp.com",
-        pathname: "/avatars/**/*",
-        protocol: "https",
-      },
-      {
-        hostname: "cdn.discordapp.com",
-        pathname: "/emojis/**/*",
+        pathname: "/**/*",
         protocol: "https",
       },
       {
@@ -41,6 +36,9 @@ const nextConfig: NextConfig = {
       [key]: `${value}`,
     };
   }, {}),
+  experimental: {
+    reactCompiler: true
+  }
 };
 
 export default nextConfig;

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useAnimate, useInView } from "framer-motion";
+import { motion, useAnimate, useInView } from "motion/react";
 import { useEffect } from "react";
 
 import Image from "next/image";
@@ -18,10 +18,10 @@ export const GrowLogo = () => {
           width: "fit-content",
         },
         {
-          duration: 0.3,
+          duration: 1,
           ease: "easeInOut",
           type: "spring",
-          damping: 7,
+          damping: 11,
         }
       );
     }
@@ -29,15 +29,16 @@ export const GrowLogo = () => {
 
   return (
     <div ref={scope}>
-      <motion.div initial={{ display: "none" }} className="inline">
+      <motion.div initial={{ display: "none" }} className="inline z-50">
         <Image
+          className="drop-shadow-lg"
           draggable={false}
-          src="/retro.webp"
+          src="/retro.png"
           alt="Brew"
-          width={400}
-          height={400}
+          width={500}
+          height={500}
           quality={100}
-          priority
+          loading="lazy"
         />
       </motion.div>
     </div>

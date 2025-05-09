@@ -1,15 +1,10 @@
 "use client";
 
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
-import { useEffect, useState } from "react";
-import {
-  BsDiscord,
-  BsFillHouseFill,
-  BsHeartPulseFill,
-  BsStack,
-} from "react-icons/bs";
+import { useCallback, useEffect, useState } from "react";
+import { BsDiscord, BsFillHouseFill, BsHeartPulseFill, BsStack } from "react-icons/bs";
 
-import { cn } from "@/lib/utils";
+import { absoluteUrl, cn } from "@/lib/utils";
 import Image from "next/image";
 import { DialogBox } from "./dialog";
 import DiscordAppsIcon from "./icons/discord-apps";
@@ -18,8 +13,11 @@ import Profile from "./profile";
 import Link from "next/link";
 import { Button } from "./button";
 
+import { SignedIn, SignedOut, UserButton, useSignIn } from "@clerk/nextjs";
+
 export default function Navbar({ children }: { children?: React.ReactNode }) {
   const [scrolled, setScrolled] = useState(false);
+  const { signIn } = useSignIn();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,19 +32,35 @@ export default function Navbar({ children }: { children?: React.ReactNode }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleSignIn = useCallback(() => {
+    if (window !== undefined && signIn) {
+      const popup = window.open("about:blank", "Sign In", "width=800,height=777");
+      signIn.authenticateWithPopup({
+        strategy: "oauth_discord",
+        redirectUrl: absoluteUrl("/sign-in/sso-callback"),
+        redirectUrlComplete: "/",
+        popup,
+      }).then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        console.error(err);
+      });
+    }
+  }, [signIn]);
+
   return (
     <div>
       <div
         className={cn(
           "fixed inset-x-0 bottom-0 z-50 mx-auto md:bottom-auto md:top-10 flex items-center transition-all",
-          "md:max-w-full xl:max-w-full 2xl:max-w-full md:top-10",
-          scrolled
-            ? "md:h-[64px] bg-transparent md:top-0 md:border-b-2 [border-image:linear-gradient(to_right,transparent,#27272a,transparent)_30]"
-            : "md:h-[52px] bg-transparent md:border-b-2 [border-image:linear-gradient(to_right,transparent_50%,#27272a,transparent_50%)_30]"
+          "md:max-w-full xl:max-w-full 2xl:max-w-full md:top-10"
+          // scrolled
+          //   ? "md:h-[64px] bg-transparent md:top-0 md:border-b-2 [border-image:linear-gradient(to_right,transparent,var(--primary-accent),transparent)_30]"
+          //   : "md:h-[52px] bg-transparent md:border-b-2 [border-image:linear-gradient(to_right,transparent_50%,var(--primary-accent),transparent_50%)_30]"
         )}
       >
-          <div className="bottom-0 absolute w-full h-full bg-background/70 backdrop-blur-sm"></div>
-          <div className="hidden md:flex w-full z-10 pointer-events-none">{children}</div>
+        <div className={"bottom-0 absolute w-full h-full bg-transparent"}></div>
+        <div className="hidden md:flex w-full z-10 pointer-events-none">{children}</div>
         <div
           className={cn(
             "fixed inset-x-0 bottom-0 mx-auto md:top-10 transition-all",
@@ -91,20 +105,18 @@ export default function Navbar({ children }: { children?: React.ReactNode }) {
             </Dialog>
             {/* Desktop View */}
             <div className="w-1/3 hidden md:flex">
+              <Image
+                src="/brew.png"
+                alt="Brew"
+                width={36}
+                height={36}
+                className="transition-all size-9 mr-3 rounded-full"
+              />
               <HoveredLink
-                className={cn(
-                  "font-mono text-3xl font-black transition-all uppercase italic tracking-tighter"
-                )}
+                className={cn("transition-all font-semibold flex items-center")}
                 href="/"
               >
-                <Image
-                  src="https://cdn.discordapp.com/emojis/1282465786371506176.webp?size=128&quality=lossless"
-                  alt="Coffee Bean"
-                  width={36}
-                  height={36}
-                  className="transition-all -rotate-12 size-9 mr-1.5"
-                />
-                <span className="hidden xl:inline-block">Brew</span>
+                <span className="hidden xl:inline-block">Home</span>
               </HoveredLink>
             </div>
             <div className="hidden items-center font-semibold justify-center space-x-4 md:flex md:space-x-8">
@@ -122,6 +134,25 @@ export default function Navbar({ children }: { children?: React.ReactNode }) {
                 </Button>
               </Link>
             </div>
+            <SignedOut>
+              <Button variant="blue" rounded="xl" size="icon" onClick={handleSignIn}>
+                Sign In
+              </Button>
+            </SignedOut>
+            <SignedIn>
+              <UserButton
+                appearance={{
+                  elements: {
+                    button__manageAccount: {
+                      display: "none",
+                    },
+                    userButtonPopoverFooter: {
+                      display: "none",
+                    },
+                  },
+                }}
+              />
+            </SignedIn>
           </Menu>
         </div>
       </div>

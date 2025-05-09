@@ -71,3 +71,60 @@ export enum Material {
   MILK = "milk",
   PLANT_FIBER = "plant fiber",
 }
+
+export interface Guild {
+  id: string;
+  name: string;
+  iconUrl: string;
+  owner: boolean;
+  permissions: string;
+  features: string[];
+  memberCount: number;
+}
+
+export interface APIGuild {
+  id: string;
+  name: string;
+  icon?: string;
+  icon_hash?: string;
+  splash?: string;
+  discovery_splash?: string;
+  owner?: boolean;
+  owner_id: string;
+  permissions?: string;
+  region?: string; // Deprecated
+  afk_channel_id?: string;
+  afk_timeout: number;
+  widget_enabled?: boolean;
+  widget_channel_id?: string;
+  verification_level: number;
+  default_message_notifications: number;
+  explicit_content_filter: number;
+  roles: unknown[];
+  emojis: unknown[];
+  features: string[];
+  mfa_level: number;
+  application_id?: string;
+  system_channel_id?: string;
+  system_channel_flags: number;
+  rules_channel_id?: string;
+  max_presences?: number | null;
+  max_members?: number;
+  vanity_url_code?: string;
+  description?: string;
+  banner?: string;
+  premium_tier: number;
+  premium_subscription_count?: number;
+  preferred_locale: string;
+  public_updates_channel_id?: string;
+  max_video_channel_users?: number;
+  max_stage_video_channel_users?: number;
+  approximate_member_count?: number;
+  approximate_presence_count?: number;
+  welcome_screen?: unknown;
+  nsfw_level: number;
+  stickers?: unknown[];
+  premium_progress_bar_enabled: boolean;
+  safety_alerts_channel_id?: string;
+  incidents_data?: unknown;
+}

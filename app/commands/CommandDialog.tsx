@@ -7,7 +7,7 @@ import {
 } from "@/app/components/dialog";
 import { Command } from "@/lib/resources";
 import { parseInfo } from "@/lib/utils";
-import { motion, useAnimationControls } from "framer-motion";
+import { motion, useAnimationControls } from "motion/react";
 import React, { useState } from "react";
 import { BsCheckLg, BsCopy } from "react-icons/bs";
 
