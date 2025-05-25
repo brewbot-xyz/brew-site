@@ -16,7 +16,7 @@ export async function GET(request: Request) {
 
   const api_sig = crypto.hash(
     "md5",
-    Object.entries(params).flat().join("") + process.env.LASTFM_SECRET
+    Object.entries(params).flat().join("") + process.env.LASTFM_SECRET,
   );
 
   const res = await fetch(
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
       headers: {
         "Content-Type": "application/json",
       },
-    }
+    },
   );
   const session = await res.json();
 

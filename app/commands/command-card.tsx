@@ -1,12 +1,6 @@
 import React from "react";
 import { motion } from "motion/react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/app/components/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/app/components/card";
 import { DialogTrigger } from "@/app/components/dialog";
 import removeMd from "remove-markdown";
 import { Command } from "@/lib/resources";
@@ -24,14 +18,12 @@ export default function CommandCard({
         whileHover={{ scale: 1.05, transition: { duration: 0.1 } }}
         onClick={() => onSelect(cmd)}
       >
-        <Card className="h-full hover:cursor-pointer" aria-label="Command Card">
+        <Card variant="greyscale" className="h-full hover:cursor-pointer" aria-label="Command Card">
           <CardHeader>
             <CardTitle>{cmd.name}</CardTitle>
-            <CardDescription className="truncate">
-              {removeMd(cmd.description)}
-            </CardDescription>
+            <CardDescription className="truncate">{removeMd(cmd.description)}</CardDescription>
           </CardHeader>
-          <hr className="border-secondary-accent" />
+          <div className="h-[1px] bg-gradient-to-r from-transparent via-secondary-foreground to-transparent opacity-60" />
           <CardContent className="space-y-1.5 text-sm">
             <section className="truncate">
               <h5 className="font-normal uppercase">Aliases</h5>

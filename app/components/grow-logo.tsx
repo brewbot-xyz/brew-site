@@ -22,7 +22,7 @@ export const GrowLogo = () => {
           ease: "easeInOut",
           type: "spring",
           damping: 11,
-        }
+        },
       );
     }
   }, [animate, isInView]);

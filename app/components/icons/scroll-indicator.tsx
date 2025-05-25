@@ -1,17 +1,10 @@
+import { useScrolled } from "@/hooks/use-scrolled";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 function ScrollIndicator() {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const scrolled = useScrolled();
 
   return (
     <motion.div
@@ -21,9 +14,9 @@ function ScrollIndicator() {
       transition={{ delay: 0.8, duration: 0.5 }}
     >
       <motion.div
-        className={cn("flex flex-col items-center", scrollY === 0 ? "opacity-100" : "opacity-0")}
+        className={cn("flex flex-col items-center", scrolled ? "opacity-100" : "opacity-0")}
         initial={{ opacity: 0 }}
-        animate={{ opacity: scrollY <= 0 ? 1 : 0 }}
+        animate={{ opacity: scrolled ? 0 : 1 }}
         transition={{ duration: 0.3 }}
       >
         <span className="text-primary-foreground font-mono font-bold text-lg mb-2">Learn More</span>

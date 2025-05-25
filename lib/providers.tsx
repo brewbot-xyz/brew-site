@@ -6,12 +6,11 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
 import { ThemeProvider } from "next-themes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SuperJSON from "superjson";
 import { makeQueryClient } from "./query-client";
 import { trpc } from "./trpc";
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
+import Scrollbars from "@/app/components/scrollbars";
 let browserQueryClient: QueryClient;
 function getQueryClient() {
   if (typeof window === "undefined") {
@@ -36,7 +35,7 @@ function getUrl() {
 export default function Providers(
   props: Readonly<{
     children: React.ReactNode;
-  }>
+  }>,
 ) {
   // NOTE: Avoid useState when initializing the query client if you don't
   //       have a suspense boundary between this and the code that may
@@ -52,45 +51,17 @@ export default function Providers(
           url: getUrl(),
         }),
       ],
-    })
+    }),
   );
-  const [styles, setStyles] = useState<CSSStyleDeclaration | null>(null);
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setStyles(getComputedStyle(document.documentElement));
-    }
-  }, []);
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark,
-        variables: {
-          fontFamily: styles?.getPropertyValue("--font-lexend"),
-          colorBackground: styles?.getPropertyValue("--popover"),
-          colorText: styles?.getPropertyValue("--popover-foreground"),
-          colorPrimary: styles?.getPropertyValue("--primary-accent"),
-          colorTextSecondary: styles?.getPropertyValue("--muted-foreground"),
-          colorInputBackground: styles?.getPropertyValue("--card"),
-          colorInputText: styles?.getPropertyValue("--card-foreground"),
-          colorDanger: styles?.getPropertyValue("--danger"),
-          colorSuccess: styles?.getPropertyValue("--success"),
-          borderRadius: "0.625rem",
-        },
-      }}
-    >
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <trpc.Provider client={trpcClient} queryClient={queryClient}>
-            {props.children}
-          </trpc.Provider>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </ClerkProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+          <Scrollbars />
+          {props.children}
+        </trpc.Provider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }

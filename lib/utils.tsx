@@ -51,7 +51,7 @@ export function parseInfo(text = "N/A", size = 20) {
             elements.push(
               <span key={`${index}-${subindex}-newline`} className="flex space-x-1.5 items-start">
                 {content}
-              </span>
+              </span>,
             );
             content = [];
           }
@@ -64,7 +64,7 @@ export function parseInfo(text = "N/A", size = 20) {
     elements.push(
       <span key="content" className="flex space-x-1.5 items-center">
         {content}
-      </span>
+      </span>,
     );
   }
 

@@ -37,8 +37,8 @@ function NowPlayingDemo() {
         prev.repeatMode === RepeatMode.OFF
           ? RepeatMode.REPEAT
           : prev.repeatMode === RepeatMode.REPEAT
-          ? RepeatMode.REPEAT_ONE
-          : RepeatMode.OFF,
+            ? RepeatMode.REPEAT_ONE
+            : RepeatMode.OFF,
     }));
   }, [setFakeState]);
 
@@ -66,7 +66,7 @@ function NowPlayingDemo() {
         </Button>
         <Button className="w-full" variant="secondary" onClick={togglePause}>
           {parseEmoji(
-            fakeState.paused ? "<:play:1362211925923991603>" : "<:pause:1362211964251668541>"
+            fakeState.paused ? "<:play:1362211925923991603>" : "<:pause:1362211964251668541>",
           )}
         </Button>
         <Button className="w-full" variant="secondary">
@@ -80,7 +80,7 @@ function NowPlayingDemo() {
           {parseEmoji(
             fakeState.repeatMode === RepeatMode.REPEAT_ONE
               ? "<:repeatsingle:1362211936539771101>"
-              : "<:repeat:1362211945700397239>"
+              : "<:repeat:1362211945700397239>",
           )}
         </Button>
       </section>

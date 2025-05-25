@@ -1,37 +1,33 @@
 "use client";
 
+import _ from "lodash";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { BsChevronDown, BsCircle, BsSearch } from "react-icons/bs";
+
 import { Badge } from "@/app/components/badge";
 import { Button } from "@/app/components/button";
 import { Dialog, DialogTrigger } from "@/app/components/dialog";
 import DiscordAppsIcon from "@/app/components/icons/discord-apps";
 import Navbar from "@/app/components/navbar";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/app/components/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/tabs";
 import { Command } from "@/lib/resources";
 import { trpc } from "@/lib/trpc";
-import _ from "lodash";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { BsChevronDown, BsCircle, BsSearch } from "react-icons/bs";
-import Loading from "../loading";
-import CommandCard from "./CommandCard";
-import CommandDialog from "./CommandDialog";
-import CommandSearch, { categoryMap } from "./CommandSearch";
+
 import { Popover, PopoverContent, PopoverTrigger } from "../components/popover";
+import Loading from "../loading";
+import CommandCard from "./command-card";
+import CommandDialog from "./command-dialog";
+import CommandSearch, { categoryMap } from "./command-search";
+import { useScrolled } from "@/hooks/use-scrolled";
+import { cn } from "@/lib/utils";
 
 export default function Commands() {
+  const scrolled = useScrolled();
   const [selected, setSelected] = useState<Command | null>(null);
   const [tabValue, setTabValue] = useState(Object.keys(categoryMap)[0]);
   const [open, setOpen] = useState(false);
 
-  const {
-    isLoading,
-    data: categories,
-    error,
-  } = trpc.brew.commandCategories.useQuery();
+  const { isLoading, data: categories, error } = trpc.brew.commandCategories.useQuery();
 
   const handleKeyPress = useCallback((e: KeyboardEvent) => {
     if (e.code === "Space" && e.ctrlKey) {
@@ -51,19 +47,15 @@ export default function Commands() {
   const renderTabs = useMemo(
     () =>
       categories?.map((c) => (
-        <TabsTrigger
-          key={c.name}
-          value={c.name}
-          className="flex justify-between space-x-10"
-        >
+        <TabsTrigger key={c.name} value={c.name} className="flex justify-between space-x-10">
           <span className="flex items-center gap-2">
             {_.get(categoryMap, c.name, <BsCircle />)}
             {_.startCase(c.name.toLowerCase().replace(/_+/, " "))}
           </span>
-          <Badge>{c.commands.length}</Badge>
+          <Badge variant="secondary">{c.commands.length}</Badge>
         </TabsTrigger>
       )),
-    [categories]
+    [categories],
   );
 
   if (isLoading || !categories) return <Loading />;
@@ -76,7 +68,11 @@ export default function Commands() {
           <div className="flex w-full max-w-full justify-between px-4 md:px-10">
             <div className="flex items-center text-3xl font-bold">
               <DiscordAppsIcon className="mr-2" />
-              <span className="flex md:hidden xl:flex">Commands</span>
+              <span
+                className={cn("transition-all", scrolled ? "opacity-0" : "flex md:hidden xl:flex")}
+              >
+                Commands
+              </span>
             </div>
             <DialogTrigger asChild id="searchTrigger">
               <div className="flex flex-col items-center gap-2 text-muted-foreground">
@@ -107,18 +103,18 @@ export default function Commands() {
         <CommandSearch categories={categories} setSelected={setSelected} />
       </Dialog>
 
-      <Dialog
-        open={!!selected}
-        onOpenChange={(open) => !open && setSelected(null)}
-      >
+      <Dialog open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
         <Tabs
           value={tabValue}
           onValueChange={setTabValue}
           defaultValue={Object.keys(categoryMap)[0]}
-          className="mt-20 mb-32 md:my-32 grid w-full grid-cols-1 justify-center gap-4 px-8 2xl:grid-cols-[20%_60%_20%]"
+          className="mt-20 mb-32 md:my-32 grid w-full grid-cols-1 justify-center gap-4 px-8 2xl:grid-cols-[4%_16%_60%_20%]"
         >
+          <div />
           <div className="hidden 2xl:block">
-            <TabsList className="w-full">{renderTabs}</TabsList>
+            <TabsList variant="greyscale" className="w-full">
+              {renderTabs}
+            </TabsList>
           </div>
 
           <div className="mt-8 space-x-3 col-span-full flex w-full px-3 fixed inset-x-0 bottom-16 z-50 justify-center items-center 2xl:hidden">
@@ -136,16 +132,15 @@ export default function Commands() {
                     {_.startCase(tabValue.toLowerCase().replace(/_+/, " "))}
                   </span>
                   <span className="flex items-center gap-2">
-                    <Badge>
-                      {categories.find((c) => c.name === tabValue)?.commands
-                        .length || 0}
+                    <Badge variant="secondary">
+                      {categories.find((c) => c.name === tabValue)?.commands.length || 0}
                     </Badge>
                     <BsChevronDown className="ml-2 size-4 shrink-0 opacity-50" />
                   </span>
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-full md:max-w-sm bg-transparent outline-none">
-                <TabsList className="w-full" onClick={() => setOpen(false)}>
+                <TabsList variant="greyscale" className="w-full" onClick={() => setOpen(false)}>
                   {categories.map((c) => (
                     <TabsTrigger
                       key={c.name}
@@ -157,7 +152,7 @@ export default function Commands() {
                         {_.get(categoryMap, c.name, <BsCircle />)}
                         {_.startCase(c.name.toLowerCase().replace(/_+/, " "))}
                       </span>
-                      <Badge>{c.commands.length}</Badge>
+                      <Badge variant="secondary">{c.commands.length}</Badge>
                     </TabsTrigger>
                   ))}
                 </TabsList>

@@ -12,20 +12,19 @@ const HeroSection = () => {
   const [scope, animate] = useAnimate();
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center py-20 relative">
-      <div className="relative z-10 text-center max-w-3xl mx-auto px-4">
+    <section className="w-full min-h-screen flex flex-col items-center justify-center py-20 relative">
+      <div className="relative z-10 text-center w-full mx-auto">
         <CardTrack>
           <motion.div
-            className="text-lg font-mono relative mx-auto flex flex-col items-center mb-8"
+            className="text-lg font-mono flex flex-col items-center mb-8"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ ...transition, delay: 0.1 }}
           >
             <GrowLogo />
-
-            <motion.section ref={scope} className="mt-8" initial={{ y: 20, opacity: 0 }}>
+            <motion.section ref={scope} initial={{ y: 20, opacity: 0 }}>
               <Ticker scope={scope} animate={animate} />
-              <div className="flex flex-wrap gap-4 justify-center mt-5">
+              <div className="flex  gap-4 justify-center mt-5">
                 <Link href="https://discord.com/oauth2/authorize?client_id=1076140187471593492&permissions=8&scope=applications.commands%20bot">
                   <Button size="lg">
                     <BsPlusLg className="size-5 mr-1" /> Add to Discord

@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import "overlayscrollbars/overlayscrollbars.css";
 
 import Providers from "@/lib/providers";
 import { cn } from "@/lib/utils";
 import { GeistMono } from "geist/font/mono";
 import { Lexend } from "next/font/google";
-// import Scrollbars from "./components/scrollbars";
 import Script from "next/script";
 import "./globals.css";
+import "overlayscrollbars/overlayscrollbars.css";
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -56,14 +55,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
+      {/* <head>
         <Script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js" />
-      </head>
+      </head> */}
       <body
         className={cn(
           "min-h-screen bg-background text-foreground subpixel-antialiased font-sans",
           lexend.variable,
-          GeistMono.variable
+          GeistMono.variable,
         )}
       >
         <Providers>{children}</Providers>

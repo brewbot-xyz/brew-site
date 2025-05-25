@@ -30,7 +30,7 @@ function NumberTicker({
               acc.users += shard.user_count;
               return acc;
             },
-            { guilds: 0, users: 0 }
+            { guilds: 0, users: 0 },
           ),
   });
 

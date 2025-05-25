@@ -12,11 +12,7 @@ function getMiddleValues<T>(arr: T[], n: number) {
   };
 }
 
-export function useRotatingQueue<T>(
-  items: T[] = [],
-  intervalMs: number,
-  size: number
-) {
+export function useRotatingQueue<T>(items: T[] = [], intervalMs: number, size: number) {
   const [queue, setQueue] = useState<T[]>([]);
   const indexRef = useRef(size);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -39,9 +35,7 @@ export function useRotatingQueue<T>(
         indexRef.current = (indexRef.current + 0.5) % items.length;
         return items
           .slice(indexRef.current, indexRef.current + size)
-          .concat(
-            items.slice(0, Math.max(0, indexRef.current + size - items.length))
-          );
+          .concat(items.slice(0, Math.max(0, indexRef.current + size - items.length)));
       });
     }, intervalMs);
 
