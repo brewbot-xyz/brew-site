@@ -11,7 +11,7 @@ import {
   BsQuestionCircleFill,
 } from "react-icons/bs";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Button } from "./button";
 import AppTag from "./app-tag";
 import DiscordAppsIcon from "./icons/discord-apps";
@@ -64,12 +64,7 @@ export default function Profile() {
             <h2 className="text-xs font-semibold uppercase">Resources</h2>
             <div className="w-full flex justify-end gap-2">
               <Link href="/">
-                <Button
-                  className="w-full p-0"
-                  variant="ghost"
-                  rounded="xl"
-                  size="icon"
-                >
+                <Button className="w-full p-0" variant="ghost" rounded="xl" size="icon">
                   <motion.div
                     initial={{ rotate: 0 }}
                     whileHover={{
@@ -82,12 +77,7 @@ export default function Profile() {
                 </Button>
               </Link>
               <Link href="/commands">
-                <Button
-                  className="w-full p-0"
-                  variant="ghost"
-                  rounded="xl"
-                  size="icon"
-                >
+                <Button className="w-full p-0" variant="ghost" rounded="xl" size="icon">
                   <motion.div
                     initial={{ rotate: 0 }}
                     whileHover={{
@@ -100,12 +90,7 @@ export default function Profile() {
                 </Button>
               </Link>
               <Link href="/status">
-                <Button
-                  className="w-full p-0"
-                  variant="ghost"
-                  rounded="xl"
-                  size="icon"
-                >
+                <Button className="w-full p-0" variant="ghost" rounded="xl" size="icon">
                   <motion.div
                     initial={{ rotate: 0 }}
                     whileHover={{

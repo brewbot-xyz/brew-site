@@ -10,6 +10,7 @@ import { useState } from "react";
 import SuperJSON from "superjson";
 import { makeQueryClient } from "./query-client";
 import { trpc } from "./trpc";
+import Scrollbars from "@/app/components/scrollbars";
 let browserQueryClient: QueryClient;
 function getQueryClient() {
   if (typeof window === "undefined") {
@@ -29,13 +30,12 @@ function getUrl() {
     if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
     return "http://localhost:3000";
   })();
-  console.log(`${base}/api/trpc`)
   return `${base}/api/trpc`;
 }
 export default function Providers(
   props: Readonly<{
     children: React.ReactNode;
-  }>
+  }>,
 ) {
   // NOTE: Avoid useState when initializing the query client if you don't
   //       have a suspense boundary between this and the code that may
@@ -51,17 +51,13 @@ export default function Providers(
           url: getUrl(),
         }),
       ],
-    })
+    }),
   );
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="system"
-        enableSystem
-        disableTransitionOnChange
-      >
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
         <trpc.Provider client={trpcClient} queryClient={queryClient}>
+          <Scrollbars />
           {props.children}
         </trpc.Provider>
         <ReactQueryDevtools initialIsOpen={false} />

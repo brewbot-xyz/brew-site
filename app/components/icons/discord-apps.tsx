@@ -1,7 +1,6 @@
-import { SVGProps } from "react"
-import { GenIcon } from "react-icons/lib"
+import { GenIcon } from "react-icons/lib";
 
-export default function DiscordAppsIcon(props: SVGProps<SVGSVGElement>) {
+export default function DiscordAppsIcon(props: React.SVGProps<SVGSVGElement>) {
   return GenIcon({
     tag: "svg",
     attr: { fill: "currentColor", viewBox: "0 0 24 24" },
@@ -14,5 +13,5 @@ export default function DiscordAppsIcon(props: SVGProps<SVGSVGElement>) {
         child: [],
       },
     ],
-  })(props)
+  })(props);
 }

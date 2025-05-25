@@ -8,16 +8,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         hostname: "cdn.discordapp.com",
-        pathname: "/avatars/**/*",
-        protocol: "https",
-      },
-      {
-        hostname: "cdn.discordapp.com",
-        pathname: "/emojis/**/*",
-        protocol: "https",
-      },
-      {
-        hostname: "i.ibb.co",
         pathname: "/**/*",
         protocol: "https",
       },
@@ -30,17 +20,15 @@ const nextConfig: NextConfig = {
   },
   productionBrowserSourceMaps: true,
   env: Object.entries(env).reduce((acc, [key, value]) => {
-    if (
-      key.startsWith("__") ||
-      key.startsWith("NODE_") ||
-      key === "NEXT_RUNTIME"
-    )
-      return acc;
+    if (key.startsWith("__") || key.startsWith("NODE_") || key === "NEXT_RUNTIME") return acc;
     return {
       ...acc,
       [key]: `${value}`,
     };
   }, {}),
+  experimental: {
+    reactCompiler: true,
+  },
 };
 
 export default nextConfig;

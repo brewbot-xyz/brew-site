@@ -10,9 +10,8 @@
 
 import { initTRPC } from "@trpc/server";
 import superjson from "superjson";
-import type { Context } from './context';
 
-const t = initTRPC.context<Context>().create({
+const t = initTRPC.create({
   /**
    * @see https://trpc.io/docs/v11/data-transformers
    */

@@ -37,10 +37,7 @@ export default function CommandSearch({
   const [query, setQuery] = useState("");
 
   const results = categories
-    .map<[string, Command[]]>((c) => [
-      c.name,
-      c.commands.filter((cmd) => cmd.name.includes(query)),
-    ])
+    .map<[string, Command[]]>((c) => [c.name, c.commands.filter((cmd) => cmd.name.includes(query))])
     .filter(([, cmds]) => cmds.length > 0);
 
   return (
@@ -53,9 +50,7 @@ export default function CommandSearch({
         placeholder="Command Search"
         className={cn(
           "transition-all",
-          results.length > 0
-            ? "rounded-none rounded-t-xl border-0 border-b"
-            : "rounded-xl"
+          results.length > 0 ? "rounded-none rounded-t-xl border-0 border-b" : "rounded-xl",
         )}
         startIcon={<BsSearch />}
         value={query}
@@ -63,9 +58,7 @@ export default function CommandSearch({
       />
       <OverlayScrollbarsComponent
         element="div"
-        className={cn(
-          results.length > 0 ? "my-2 flex flex-col px-2" : "hidden"
-        )}
+        className={cn(results.length > 0 ? "my-2 flex flex-col px-2" : "hidden")}
         defer
       >
         {results.flatMap(([category, commands]) =>
@@ -81,12 +74,10 @@ export default function CommandSearch({
                   {_.get(categoryMap, category, <BsCircle />)}
                   {cmd.name}
                 </span>
-                <span className="truncate text-right font-light">
-                  {removeMd(cmd.description)}
-                </span>
+                <span className="truncate text-right font-light">{removeMd(cmd.description)}</span>
               </Button>
             </DialogTrigger>
-          ))
+          )),
         )}
       </OverlayScrollbarsComponent>
     </DialogBox>

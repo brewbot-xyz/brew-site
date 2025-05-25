@@ -1,7 +1,7 @@
 export const EMOJI_PATTERN = /(<a?:\w+:\d+>)/g;
-export const OWNER_IDS = ["195932866134147072", "1201776746555527198"];
+export const OWNER_IDS = ["195932866134147072", "1201776746555527198"]; // okay to be hardcoded, only used for the demo users
 
-class DiscordClient {
+export class DiscordClient {
   public readonly baseURL: string = "https://discord.com/api/v10";
   private apiKey: string;
 
@@ -14,7 +14,7 @@ class DiscordClient {
       baseURL: this.baseURL,
       ...options,
       headers: {
-        Authorization: `Bot ${this.apiKey}`,
+        Authorization: this.apiKey,
         ...options.headers,
       },
     };
@@ -23,11 +23,9 @@ class DiscordClient {
 
     if (!response.ok) {
       const errorBody = await response.text();
-      throw new Error(
-        `[HTTP ERR] status: ${response.status}, body: ${errorBody}`
-      );
+      throw new Error(`[DiscordClient Error] status: ${response.status}, body: ${errorBody}`);
     }
-    return response.json();
+    return response.json() as Promise<T>;
   }
 
   async get<T>(url: string, options = {}) {
@@ -47,5 +45,5 @@ class DiscordClient {
   }
 }
 
-const discord = new DiscordClient(process.env.DISCORD_TOKEN);
+const discord = new DiscordClient(`Bot ${process.env.DISCORD_TOKEN}`);
 export default discord;

@@ -1,15 +1,9 @@
 "use client";
 
 import { Button } from "@/app/components/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/app/components/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/card";
 import { Input } from "@/app/components/input";
-import LatencyGraph from "@/app/components/latency-graph";
+import LatencyGraph from "@/app/status/latency-graph";
 import Navbar from "@/app/components/navbar";
 import { trpc } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
@@ -17,13 +11,7 @@ import { cn } from "@/lib/utils";
 import moment from "moment";
 import { useState } from "react";
 import { BsHeartPulseFill, BsSearch } from "react-icons/bs";
-import {
-  FaArrowsRotate,
-  FaChartLine,
-  FaClock,
-  FaServer,
-  FaUsers,
-} from "react-icons/fa6";
+import { FaArrowsRotate, FaChartLine, FaClock, FaServer, FaUsers } from "react-icons/fa6";
 
 function isValidSnowflake(snowflake: string): boolean {
   if (!/^\d{17,19}$/.test(snowflake)) {
@@ -118,11 +106,10 @@ export default function Status() {
         {shards.map((s) => (
           <Card
             key={s.shard_id}
+            variant="greyscale"
             className={cn(
               "mx-auto w-full ring-offset-background transition-shadow",
-              shardId == s.shard_id
-                ? "outline-none ring-2 ring-primary-accent ring-offset-2"
-                : ""
+              shardId == s.shard_id ? "outline-none ring-2 ring-primary-accent ring-offset-2" : "",
             )}
           >
             <CardHeader>
