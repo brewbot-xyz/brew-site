@@ -21,8 +21,7 @@ function Navbar({ children }: { children?: React.ReactNode }) {
     <div>
       <div
         className={cn(
-          "fixed inset-x-0 bottom-0 z-50 mx-auto md:bottom-auto flex items-center transition-all",
-          "md:max-w-full xl:max-w-full 2xl:max-w-full",
+          "max-w-full fixed inset-x-0 bottom-0 z-50 mx-auto md:bottom-auto flex items-center transition-all",
           scrolled ? "md:h-[81px]" : "md:h-[64px]",
         )}
       >
@@ -32,8 +31,8 @@ function Navbar({ children }: { children?: React.ReactNode }) {
           className={cn(
             "fixed inset-x-0 bottom-0 mx-auto md:top-2.5 transition-all",
             scrolled
-              ? "md:h-[62px] md:max-w-[60%] xl:max-w-[60%] 2xl:max-w-[60%]"
-              : "md:h-[50px] md:max-w-md xl:max-w-xl 2xl:max-w-3xl",
+              ? "md:h-[62px] max-w-[60%]"
+              : "md:h-[50px] md:max-w-lg xl:max-w-xl 2xl:max-w-2xl",
           )}
         >
           <Menu className="h-full items-center px-8 md:border-0 transition-all">
@@ -83,7 +82,7 @@ function Navbar({ children }: { children?: React.ReactNode }) {
                   alt="Brew"
                   width={36}
                   height={36}
-                  className="transition-all size-9 mr-0.5 rounded-full"
+                  className="aspect-square transition-all size-9 mr-0.5 rounded-full"
                 />
                 <span className="p-1.5 hidden xl:inline-block">Home</span>
               </HoveredLink>

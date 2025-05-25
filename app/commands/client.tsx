@@ -47,7 +47,7 @@ export default function Commands() {
   const renderTabs = useMemo(
     () =>
       categories?.map((c) => (
-        <TabsTrigger key={c.name} value={c.name} className="flex justify-between space-x-10">
+        <TabsTrigger key={c.name} value={c.name} className="flex justify-between">
           <span className="flex items-center gap-2">
             {_.get(categoryMap, c.name, <BsCircle />)}
             {_.startCase(c.name.toLowerCase().replace(/_+/, " "))}
@@ -139,7 +139,7 @@ export default function Commands() {
                   </span>
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-full md:max-w-sm bg-transparent outline-none">
+              <PopoverContent className="p-0 w-full md:max-w-sm text-sm bg-transparent outline-none shadow-none">
                 <TabsList variant="greyscale" className="w-full" onClick={() => setOpen(false)}>
                   {categories.map((c) => (
                     <TabsTrigger
