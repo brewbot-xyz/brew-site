@@ -4,7 +4,6 @@ import Providers from "@/lib/providers";
 import { cn } from "@/lib/utils";
 import { GeistMono } from "geist/font/mono";
 import { Lexend } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import "overlayscrollbars/overlayscrollbars.css";
 
