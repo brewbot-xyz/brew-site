@@ -44,7 +44,7 @@ export default function Embed({
               <div className="relative h-12 w-12">
                 <Image
                   draggable={false}
-                  src="/brew.png"
+                  src="/assets/brew.png"
                   alt="Brew's Avatar"
                   fill
                   className="aspect-square cursor-pointer rounded-full hover:mt-[2px] object-cover"

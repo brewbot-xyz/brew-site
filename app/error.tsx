@@ -19,7 +19,7 @@ export default function ErrorPage({
         <p>You can try again or return to the home page.</p>
       </div>
       <div className="flex gap-4 my-4">
-        <Image draggable={false} src="/brew-qr.png" alt="Brew" width={150} height={150} />
+        <Image draggable={false} src="/assets/brew-qr.png" alt="Brew" width={150} height={150} />
         <div className="flex flex-col gap-4">
           <Button size="lg" onClick={() => reset()}>
             Try again

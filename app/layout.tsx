@@ -4,7 +4,7 @@ import Providers from "@/lib/providers";
 import { cn } from "@/lib/utils";
 import { GeistMono } from "geist/font/mono";
 import { Lexend } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 import "overlayscrollbars/overlayscrollbars.css";
 
 const lexend = Lexend({
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "brewbot.xyz",
     images: [
       {
-        url: "/brew.png",
+        url: "/assets/brew.png",
         width: 480,
         height: 480,
         alt: "Brew",

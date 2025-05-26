@@ -25,7 +25,7 @@ export default function Profile() {
           <Image
             draggable={false}
             className="rounded-full border-[8px] border-secondary"
-            src="/brew.png"
+            src="/assets/brew.png"
             alt="Brew"
             width={110}
             height={110}

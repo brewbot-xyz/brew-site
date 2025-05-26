@@ -45,8 +45,8 @@ export default function Home() {
         <Navbar />
       </motion.div>
       <HeroSection />
-      <div className="relative w-full justify-center flex flex-col items-center px-24">
-        <div className="mb-16 sm:mb-24 lg:mb-36 grid gap-24 grid-cols-1 lg:grid-cols-2">
+      <div className="relative w-full justify-center flex flex-col items-center px-6 m:px-24">
+        <div className="mb-24 sm:mb-24 lg:mb-36 grid gap-24 grid-cols-1 lg:grid-cols-2">
           <section className="lg:col-span-2 text-center relative px-4 sm:px-0">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
               <span className="block sm:inline">{!isMobile && "Wide Variety of "}</span>
@@ -68,15 +68,15 @@ export default function Home() {
 
           <Card className="max-w-md place-self-center lg:place-self-end">
             <Image
-              src="/antinuke.webp"
+              src="/assets/antinuke.webp"
               alt="Antinuke Demo"
               width={1080}
               height={1080}
-              className="w-full h-auto rounded-t-3xl"
+              className="w-full h-auto rounded-t-2xl"
               quality={100}
               draggable={false}
             />
-            <div className="p-4 sm:p-6 text-center">
+            <div className="p-3 sm:p-6 text-center">
               <h1 className="flex items-center justify-center gap-2 sm:gap-3 text-lg sm:text-xl lg:text-2xl font-semibold text-primary-foreground mb-2">
                 <span>Antinuke Protection</span>
                 <BsShieldLockFill className="text-base sm:text-lg" />
@@ -98,11 +98,11 @@ export default function Home() {
               </p>
             </div>
             <Image
-              src="/brew_minigames.png"
+              src="/assets/brew-minigames.png"
               alt="Minigames Demo"
               width={1080}
               height={1080}
-              className="w-full h-auto rounded-b-3xl p-3"
+              className="w-full h-auto rounded-b-2xl p-3"
               quality={100}
               draggable={false}
             />
@@ -129,7 +129,7 @@ export default function Home() {
 
           {[
             <div
-              key={0}
+              key="voice-setup"
               className="flex flex-col items-center justify-between max-w-lg place-self-center"
             >
               <Embed user={users[0]} reply=",voicemaster setup">
@@ -177,7 +177,7 @@ export default function Home() {
               </Card>
             </div>,
             <div
-              key={14}
+              key="voice-management"
               className="flex flex-col items-center justify-between max-w-lg place-self-center"
             >
               <Card className="w-full">
@@ -252,7 +252,7 @@ export default function Home() {
                           <Image
                             draggable={false}
                             aria-label="Bot Avatar"
-                            src="/brew.png"
+                            src="/assets/brew.png"
                             alt="Bot Avatar"
                             className="inline-block size-4 sm:size-5 rounded-full outline-2 outline-green-500/50 flex-shrink-0"
                             width={40}

@@ -31,7 +31,7 @@ function Navbar({ children }: { children?: React.ReactNode }) {
           className={cn(
             "fixed inset-x-0 bottom-0 mx-auto md:top-2.5 transition-all",
             scrolled
-              ? "md:h-[62px] max-w-[60%]"
+              ? "md:h-[62px] md:max-w-[60%]"
               : "md:h-[50px] md:max-w-lg xl:max-w-xl 2xl:max-w-2xl",
           )}
         >
@@ -78,7 +78,7 @@ function Navbar({ children }: { children?: React.ReactNode }) {
                 href="/"
               >
                 <Image
-                  src="/brew.png"
+                  src="/assets/brew.png"
                   alt="Brew"
                   width={36}
                   height={36}

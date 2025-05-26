@@ -46,7 +46,7 @@ function NowPlayingDemo() {
     <div className="flex w-full flex-col items-center">
       <Image
         className="mx-auto w-full rounded-2xl"
-        src="/now_playing_demo.png"
+        src="/assets/music-demo.png"
         alt="Now Playing Demo"
         width={1920}
         height={1080}

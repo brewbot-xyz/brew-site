@@ -23,7 +23,7 @@ function CardTrack({ children }: { children?: React.ReactNode }) {
   const queue = useRotatingQueue(guilds, TRANSITION_DURATION * 1500, POSITIONS.length);
 
   return (
-    <div className="relative flex flex-col items-center justify-center w-full p-24 overflow-hidden">
+    <div className="relative flex flex-col items-center justify-center w-full p-24 overflow-x-hidden">
       {children}
       <AnimatePresence>
         {queue.length > 0 &&

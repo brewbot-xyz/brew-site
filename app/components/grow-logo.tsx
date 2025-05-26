@@ -33,7 +33,7 @@ export const GrowLogo = () => {
         <Image
           className="drop-shadow-lg"
           draggable={false}
-          src="/retro.png"
+          src="/assets/hero-logo.png"
           alt="Brew"
           width={500}
           height={500}

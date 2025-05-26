@@ -12,8 +12,8 @@ const HeroSection = () => {
   const [scope, animate] = useAnimate();
 
   return (
-    <section className="w-full min-h-screen flex flex-col items-center justify-center py-20 relative">
-      <div className="relative z-10 text-center w-full mx-auto">
+    <section className="w-full flex flex-col items-center justify-center relative">
+      <div className="relative z-10 text-center w-full mx-auto pt-4 pb-12">
         <CardTrack>
           <motion.div
             className="text-lg font-mono flex flex-col items-center mb-8"
