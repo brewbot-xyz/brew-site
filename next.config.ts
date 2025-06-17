@@ -18,7 +18,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  productionBrowserSourceMaps: true,
   env: Object.entries(env).reduce((acc, [key, value]) => {
     if (key.startsWith("__") || key.startsWith("NODE_") || key === "NEXT_RUNTIME") return acc;
     return {
