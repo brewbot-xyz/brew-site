@@ -94,7 +94,7 @@ For questions or concerns regarding this Privacy Policy, please contact us at:
 **Website:** brewbot.xyz
 `;
 
-export default function FAQ() {
+export default function PrivacyPolicy() {
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center antialiased">
       <Navbar />
