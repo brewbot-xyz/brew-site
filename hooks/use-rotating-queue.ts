@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-function getMiddleValues<T>(arr: T[], n: number) {
+export function getMiddleValues<T>(arr: T[], n: number) {
   if (n <= 0 || n > arr.length) {
     throw new Error("n must be between 1 and the array length");
   }

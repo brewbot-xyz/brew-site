@@ -6,24 +6,25 @@ import Image from "next/image";
 import Embed from "@/app/components/embed";
 import Navbar from "@/app/components/navbar";
 import { WavyBackground } from "@/app/components/wavy-background";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { transition } from "@/lib/constants";
 import { trpc } from "@/lib/trpc";
 import { parseEmoji, parseInfo } from "@/lib/utils";
+import { JSX } from "react";
 import {
   BsChevronDown,
   BsHash,
-  BsListTask,
+  BsListStars,
   BsMusicNoteList,
   BsShieldLockFill,
-  BsTools,
+  BsTools
 } from "react-icons/bs";
 import { FaGamepad, FaVolumeHigh } from "react-icons/fa6";
 import { Button } from "./components/button";
 import { Card, CardContent } from "./components/card";
-import { useIsMobile } from "@/hooks/use-mobile";
-import HeroSection from "./components/hero-section";
-import { JSX } from "react";
 import NowPlaying from "./components/demo/now-playing";
+import Footer from "./components/footer";
+import HeroSection from "./components/hero-section";
 
 export default function Home() {
   const isMobile = useIsMobile();
@@ -35,7 +36,7 @@ export default function Home() {
 
   return (
     <WavyBackground
-      className="relative flex min-h-screen w-full flex-col items-center antialiased"
+      className="relative flex min-h-screen w-full flex-col items-center antialiased z-0"
       colors={["#090C05", "#161007", "#231508", "#30190A", "#3d1d0b"]}
       wavewidth={100}
       blur={0}
@@ -45,17 +46,22 @@ export default function Home() {
         <Navbar />
       </motion.div>
       <HeroSection />
-      <div className="relative w-full justify-center flex flex-col items-center px-6 m:px-24">
+      <motion.div
+        className="relative w-full justify-center flex flex-col items-center px-6 m:px-24"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={transition}
+      >
         <div className="mb-24 sm:mb-24 lg:mb-36 grid gap-24 grid-cols-1 lg:grid-cols-2">
           <section className="lg:col-span-2 text-center relative px-4 sm:px-0">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
               <span className="block sm:inline">{!isMobile && "Wide Variety of "}</span>
-              <span className="inline-flex items-center gap-2 sm:gap-3 rounded-full bg-gradient-to-r from-primary to-primary-accent px-3 sm:px-4 py-1.5 sm:py-2 mt-2 sm:mt-0">
+              <span className="inline-flex items-center gap-2 sm:gap-3 rounded-2xl bg-gradient-to-r from-primary to-primary-accent px-2 sm:px-3 py-2 sm:py-1.5 mt-2 sm:mt-0">
                 <span>Features</span>
-                <BsListTask />
+                <BsListStars />
               </span>
             </h1>
-            <p className="mt-4 sm:mt-6 font-normal text-white/70 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-2 font-normal text-white/70 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
               Brew offers a comprehensive set of features to enhance your Discord community.
               <span className="block sm:inline">
                 <span className="hidden sm:inline">
@@ -111,12 +117,12 @@ export default function Home() {
           <section className="lg:col-span-2 text-center relative px-4 sm:px-0">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
               <span className="block sm:inline">{!isMobile && "First-rate "}</span>
-              <span className="inline-flex items-center gap-2 sm:gap-3 rounded-full bg-gradient-to-r from-primary to-primary-accent px-3 sm:px-4 py-1.5 sm:py-2 mt-2 sm:mt-0">
+              <span className="inline-flex items-center gap-2 sm:gap-3 rounded-2xl bg-gradient-to-r from-primary to-primary-accent px-2 sm:px-3 py-2 sm:py-1.5 mt-2 sm:mt-0">
                 <span>Voice Management</span>
                 <BsMusicNoteList />
               </span>
             </h1>
-            <p className="mt-4 sm:mt-6 font-normal text-white/70 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-2 font-normal text-white/70 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
               Create, manage, and customize voice channels with ease.
               <span className="block sm:inline">
                 <span className="hidden sm:inline">
@@ -143,11 +149,11 @@ export default function Home() {
               <section className="flex w-full space-x-2 pt-2 pb-4">
                 <Button
                   variant="success"
-                  className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2"
+                  className="text-xs sm:text-sm px-2 sm:px-3 py-2 sm:py-1.5"
                 >
                   Approve
                 </Button>
-                <Button variant="danger" className="text-xs sm:text-sm px-3 sm:px-4 py-1.5 sm:py-2">
+                <Button variant="danger" className="text-xs sm:text-sm px-2 sm:px-3 py-2 sm:py-1.5">
                   Decline
                 </Button>
               </section>
@@ -209,7 +215,7 @@ export default function Home() {
                       <span className="inline-flex items-center gap-2 text-sm font-medium">
                         Public Channels <BsChevronDown className="inline-block size-3" />
                       </span>
-                      <div className="mt-2 flex flex-col space-y-1.5 text-primary-foreground">
+                      <div className="mt-2 flex flex-col space-y-1.5 text-white">
                         <span className="inline-flex items-center gap-2 text-xs sm:text-sm">
                           <FaVolumeHigh className="size-4 sm:size-5 flex-shrink-0" />
                           <span className="truncate">
@@ -275,12 +281,12 @@ export default function Home() {
 
           <section className="col-span-1 lg:col-span-2 text-center relative px-4 sm:px-0">
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight">
-              <span className="inline-flex items-center gap-2 sm:gap-3 rounded-full bg-gradient-to-r from-primary to-primary-accent px-3 sm:px-4 py-1.5 sm:py-2">
+              <span className="inline-flex items-center gap-2 sm:gap-3 rounded-2xl bg-gradient-to-r from-primary to-primary-accent px-2 sm:px-3 py-2 sm:py-1.5">
                 <span>General Moderation</span>
                 <BsTools />
               </span>
             </h1>
-            <p className="mt-4 sm:mt-6 font-normal text-white/70 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-2 font-normal text-white/70 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
               Kick, ban, mute, and warn users with ease. View user information and audit logs.
             </p>
           </section>
@@ -332,7 +338,8 @@ export default function Home() {
             </div>
           </Embed>
         </div>
-      </div>
+      </motion.div>
+      <Footer />
     </WavyBackground>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import { useGpuTier } from "@/hooks/use-gpu-tier";
 import { transition } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
@@ -25,6 +26,7 @@ export const WavyBackground = ({
   waveOpacity?: number;
   [key: string]: unknown;
 }) => {
+  const gpuTier = useGpuTier();
   const noise = createNoise3D();
   let w: number,
     h: number,
@@ -93,7 +95,10 @@ export const WavyBackground = ({
     ctx.globalAlpha = waveOpacity || 0.5;
     ctx.fillRect(0, 0, w, h);
     drawWave(5);
-    animationId = requestAnimationFrame(render);
+    console.log("rendering wave background", gpuTier.tier);
+    if (gpuTier.tier > 1) {
+      animationId = requestAnimationFrame(render);
+    }
   };
 
   useEffect(() => {

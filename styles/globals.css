@@ -53,7 +53,7 @@
   --card: rgb(45, 21, 5);
   --card-foreground: rgb(216, 196, 176);
   --popover: rgb(9, 12, 5);
-  --popover-foreground: rgb(216, 196, 176);
+  --popover-foreground: oklch(80.5% 0 0);
   /* Primary */
   --primary: rgb(45, 21, 5);
   --primary-foreground: rgb(216, 196, 176);
@@ -110,6 +110,19 @@
     @apply inline-block;
   }
 }
+
+.no-gpu * {
+  --tw-blur: blur(0) !important;
+  --tw-backdrop-blur: blur(0) !important;
+}
+@media (prefers-reduced-transparency: reduce) {
+  [class^="blur-"],
+  [class^="backdrop-blur-"] {
+    --tw-blur: blur(0) !important;
+    --tw-backdrop-blur: blur(0) !important;
+  }
+}
+
 strong > em,
 em > strong,
 b > i,

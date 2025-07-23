@@ -1,5 +1,5 @@
 export const EMOJI_PATTERN = /(<a?:\w+:\d+>)/g;
-export const OWNER_IDS = ["195932866134147072", "1201776746555527198"]; // okay to be hardcoded, only used for the demo users
+export const OWNER_IDS = ["195932866134147072", "1174677160582185003"]; // okay to be hardcoded, only used for the demo users
 
 export class DiscordClient {
   public readonly baseURL: string = "https://discord.com/api/v10";

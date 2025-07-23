@@ -1,16 +1,19 @@
 "use client";
 // ^-- to make sure we can mount the Provider from a server component
+import Footer from "@/app/components/footer";
+import Scrollbars from "@/app/components/scrollbars";
+import { useGpuTier } from "@/hooks/use-gpu-tier";
 import type { AppRouter } from "@/server/routers/_app";
 import type { QueryClient } from "@tanstack/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
 import { ThemeProvider } from "next-themes";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import SuperJSON from "superjson";
 import { makeQueryClient } from "./query-client";
 import { trpc } from "./trpc";
-import Scrollbars from "@/app/components/scrollbars";
 let browserQueryClient: QueryClient;
 function getQueryClient() {
   if (typeof window === "undefined") {
@@ -42,6 +45,9 @@ export default function Providers(
   //       suspend because React will throw away the client on the initial
   //       render if it suspends and there is no boundary
   const queryClient = getQueryClient();
+  const pathname = usePathname();
+  const shouldShowFooter = pathname !== "/";
+  const gpuTier = useGpuTier();
   const [trpcClient] = useState(() =>
     createTRPCClient<AppRouter>({
       links: [
@@ -53,12 +59,17 @@ export default function Providers(
       ],
     }),
   );
+  useEffect(() => {
+    if (gpuTier.tier < 2) document.documentElement.classList.add("no-gpu");
+    return () => document.documentElement.classList.remove("no-gpu");
+  }, [gpuTier.tier]);
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
         <trpc.Provider client={trpcClient} queryClient={queryClient}>
           <Scrollbars />
           {props.children}
+          {shouldShowFooter && <Footer />}
         </trpc.Provider>
         <ReactQueryDevtools initialIsOpen={false} />
       </ThemeProvider>

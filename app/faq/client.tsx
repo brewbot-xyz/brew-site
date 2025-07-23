@@ -7,7 +7,7 @@ import { BsQuestionCircleFill } from "react-icons/bs";
 
 export default function FAQ() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col items-center antialiased">
+    <div className="relative flex min-h-screen w-full flex-col items-center antialiased -z-50">
       <Navbar>
         <div className="my-4 flex h-[52px] w-full justify-between px-4 md:my-10 md:px-10">
           <div className="flex items-center text-3xl font-bold">
@@ -37,7 +37,7 @@ export default function FAQ() {
           </h6>
           Yes, we provide support to help with any issues or queries you may have regarding the bot.
           Join our{" "}
-          <Link href="/discord">
+          <Link href="https://discord.gg/brew">
             <Button variant="link">support server</Button>
           </Link>{" "}
           for assistance.
@@ -59,7 +59,7 @@ export default function FAQ() {
           </Link>{" "}
           to check if the bot is online. If the bot is operating as intended and still not
           responding, join our{" "}
-          <Link href="/discord">
+          <Link href="https://discord.gg/brew">
             <Button variant="link">support server</Button>
           </Link>{" "}
           for assistance.

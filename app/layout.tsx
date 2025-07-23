@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 
 import Providers from "@/lib/providers";
 import { cn } from "@/lib/utils";
+import "@/styles/globals.css";
 import { GeistMono } from "geist/font/mono";
 import { Lexend } from "next/font/google";
-import "@/styles/globals.css";
 import "overlayscrollbars/overlayscrollbars.css";
 
 const lexend = Lexend({
