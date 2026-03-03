@@ -1,17 +1,28 @@
 "use client";
 
-import { Button } from "@/app/components/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/card";
-import { Input } from "@/app/components/input";
-import LatencyGraph from "@/app/status/latency-graph";
-import Navbar from "@/app/components/navbar";
-import { trpc } from "@/lib/trpc";
-import { cn } from "@/lib/utils";
-
 import moment from "moment";
 import { useState } from "react";
 import { BsHeartPulseFill, BsSearch } from "react-icons/bs";
-import { FaArrowsRotate, FaChartLine, FaClock, FaServer, FaUsers } from "react-icons/fa6";
+import {
+  FaArrowsRotate,
+  FaChartLine,
+  FaClock,
+  FaServer,
+  FaUsers,
+} from "react-icons/fa6";
+import { Button } from "@/app/components/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/app/components/card";
+import { Input } from "@/app/components/input";
+import Navbar from "@/app/components/navbar";
+import LatencyGraph from "@/app/status/latency-graph";
+import { trpc } from "@/lib/trpc";
+import { cn } from "@/lib/utils";
 
 function isValidSnowflake(snowflake: string): boolean {
   if (!/^\d{17,19}$/.test(snowflake)) {
@@ -56,10 +67,14 @@ export default function Status() {
     initialData: { shards: [] },
     refetchInterval: 30_000,
   });
-  if (!shards.length) refetch();
+  if (!shards.length) {
+    refetch();
+  }
 
   const updateShardId = (value: string) => {
-    if (!isValidSnowflake(value)) return setShardId(null);
+    if (!isValidSnowflake(value)) {
+      return setShardId(null);
+    }
     setShardId(Number((BigInt(value) >> 22n) % BigInt(shards.length)));
   };
 
@@ -67,50 +82,52 @@ export default function Status() {
     <div className="relative flex min-h-screen w-full flex-col items-center antialiased">
       <Navbar>
         <div className="my-4 flex h-[52px] w-full justify-between px-4 md:my-10 md:px-10">
-          <div className="flex items-center text-3xl font-bold">
+          <div className="flex items-center font-bold text-3xl">
             <BsHeartPulseFill className="mr-2" />
             <span className="flex md:hidden xl:flex">Status</span>
           </div>
-          <div className="flex items-center gap-2 text-muted-foreground pointer-events-auto">
+          <div className="pointer-events-auto flex items-center gap-2 text-muted-foreground">
             <Input
               id="name"
+              onChange={(e) => updateShardId(e.target.value)}
               placeholder="Guild ID"
               size="sm"
               value={shardId || undefined}
-              onChange={(e) => updateShardId(e.target.value)}
             />
-            <Button variant="secondary" size="icon">
+            <Button size="icon" variant="secondary">
               <BsSearch />
             </Button>
           </div>
         </div>
       </Navbar>
-      <div className="md:hidden fixed inset-x-0 top-0 z-50 flex w-full justify-between px-8 py-4 md:px-10 backdrop-blur-md">
-        <div className="flex items-center text-3xl font-bold">
+      <div className="fixed inset-x-0 top-0 z-50 flex w-full justify-between px-8 py-4 backdrop-blur-md md:hidden md:px-10">
+        <div className="flex items-center font-bold text-3xl">
           <span className="flex md:hidden xl:flex">Status</span>
         </div>
         <div className="flex items-center gap-2 text-muted-foreground">
           <Input
             id="name"
+            onChange={(e) => updateShardId(e.target.value)}
             placeholder="Guild ID"
             size="sm"
             value={shardId || undefined}
-            onChange={(e) => updateShardId(e.target.value)}
           />
-          <Button variant="secondary" size="icon">
+          <Button size="icon" variant="secondary">
             <BsSearch />
           </Button>
         </div>
       </div>
-      <div className="mt-20 mb-32 md:my-32 grid w-full max-w-6xl grid-cols-1 gap-4 px-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-20 mb-32 grid w-full max-w-6xl grid-cols-1 gap-4 px-8 md:my-32 md:grid-cols-2 lg:grid-cols-3">
         {shards.map((s) => (
           <Card
-            key={s.shard_id}
-            variant="greyscale"
             className={cn(
               "mx-auto w-full ring-offset-background transition-shadow",
-              shardId == s.shard_id ? "outline-none ring-2 ring-primary-accent ring-offset-2" : "",
+              shardId === s.shard_id
+                ? "outline-none ring-2 ring-primary-accent ring-offset-2"
+                : "",
             )}
+            key={s.shard_id}
+            variant="greyscale"
           >
             <CardHeader>
               <CardTitle className="flex justify-between">

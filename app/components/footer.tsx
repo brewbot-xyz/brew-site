@@ -1,121 +1,126 @@
-import Link from "next/link";
-import { BsAt, BsDiscord, BsEnvelopeAtFill, BsGithub, BsTwitterX } from "react-icons/bs";
-import { Popover, PopoverArrow, PopoverContent, PopoverTrigger } from "./popover";
 import Image from "next/image";
+import Link from "next/link";
+import {
+  BsAt,
+  BsDiscord,
+  BsEnvelopeAtFill,
+  BsGithub,
+  BsTwitterX,
+} from "react-icons/bs";
+import {
+  Popover,
+  PopoverArrow,
+  PopoverContent,
+  PopoverTrigger,
+} from "./popover";
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-black/20 backdrop-blur-sm border-t border-white/10 mt-auto">
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div className="col-span-2">
-            <div className="flex items-center gap-3 mb-4">
+    <footer className="mt-auto w-full border-white/10 border-t bg-black/20 pb-16 backdrop-blur-sm md:pb-0">
+      <div className="mx-auto max-w-7xl px-6 py-8">
+        <div className="grid grid-cols-4 gap-8 md:grid-cols-6">
+          <div className="col-span-4">
+            <div className="mb-4 flex items-center gap-3">
               <Image
-                src="/assets/brew.png"
                 alt="Brew"
-                className="w-8 h-8 rounded-md"
-                width={32}
+                className="h-8 w-8 rounded-md"
                 height={32}
+                src="/assets/brew.png"
+                width={32}
               />
-              <span className="text-xl font-bold text-white">Brew</span>
+              <span className="font-bold text-white text-xl">Brew</span>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed max-w-xs">
-              The best all-in-one bot for keeping your community safe and engaged.
+            <p className="max-w-xs text-sm text-white/70 leading-relaxed">
+              The best all-in-one bot for keeping your community safe and
+              engaged.
             </p>
           </div>
-
-          {/* Support */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Support</h3>
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="mb-4 font-semibold text-white">Support</h3>
             <ul className="space-y-2">
               <li>
                 <Link
+                  className="text-sm text-white/70 transition-colors hover:text-white"
                   href="https://docs.brewbot.xyz"
-                  className="text-white/70 hover:text-white transition-colors text-sm"
                 >
                   Documentation
                 </Link>
               </li>
               <li>
                 <Link
+                  className="text-sm text-white/70 transition-colors hover:text-white"
                   href="https://discord.gg/brew"
-                  className="text-white/70 hover:text-white transition-colors text-sm"
                 >
                   Support Server
                 </Link>
               </li>
               <li>
                 <Link
+                  className="text-sm text-white/70 transition-colors hover:text-white"
                   href="/privacy"
-                  className="text-white/70 hover:text-white transition-colors text-sm"
                 >
                   Privacy Policy
                 </Link>
               </li>
               <li>
                 <Link
+                  className="text-sm text-white/70 transition-colors hover:text-white"
                   href="/terms"
-                  className="text-white/70 hover:text-white transition-colors text-sm"
                 >
                   Terms of Service
                 </Link>
               </li>
             </ul>
           </div>
-
-          {/* Community */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Community</h3>
+          <div className="col-span-2 place-items-end md:col-span-1">
+            <h3 className="mb-4 font-semibold text-white">Community</h3>
             <div className="flex space-x-4">
               <a
-                href="https://discord.gg/brew"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/70 hover:text-white transition-colors"
                 aria-label="Discord"
+                className="text-white/70 transition-colors hover:text-white"
+                href="https://discord.gg/brew"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                <BsDiscord className="w-5 h-5" />
+                <BsDiscord className="h-5 w-5" />
               </a>
               <a
-                href="https://twitter.com/discordbrew"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/70 hover:text-white transition-colors"
                 aria-label="Twitter"
+                className="text-white/70 transition-colors hover:text-white"
+                href="https://twitter.com/discordbrew"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                <BsTwitterX className="w-5 h-5" />
+                <BsTwitterX className="h-5 w-5" />
               </a>
               <a
-                href="https://github.com/orgs/brewbot-xyz/discussions"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/70 hover:text-white transition-colors"
                 aria-label="GitHub"
+                className="text-white/70 transition-colors hover:text-white"
+                href="https://github.com/orgs/brewbot-xyz/discussions"
+                rel="noopener noreferrer"
+                target="_blank"
               >
-                <BsGithub className="w-5 h-5" />
+                <BsGithub className="h-5 w-5" />
               </a>
             </div>
           </div>
         </div>
-
-        {/* Bottom Section */}
-        <div className="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-white/60 text-sm">
+        <div className="mt-8 flex flex-col items-center justify-between border-white/10 border-t pt-6 md:flex-row">
+          <p className="text-sm text-white/60">
             © {new Date().getFullYear()} brewbot.xyz. All rights reserved.
           </p>
-          <p className="text-white/60 text-sm mt-2 md:mt-0">
+          <p className="mt-2 text-sm text-white/60 md:mt-0">
             Made with ❤️ by{" "}
             <Popover>
-              <PopoverTrigger className="underline" aria-label="Verified App">
+              <PopoverTrigger aria-label="Verified App" className="underline">
                 Jesse
               </PopoverTrigger>
-              <PopoverContent side="top" className="outline-1 outline-muted">
+              <PopoverContent className="outline-1 outline-muted" side="top">
                 <PopoverArrow className="fill-muted" />
                 <span className="font-semibold">Lead Bot Developer</span>
                 <span className="flex items-center gap-1">
                   <BsAt />
-                  fcby
+                  vosquz
                 </span>
                 <span className="flex items-center gap-1">
                   <BsEnvelopeAtFill />
@@ -125,19 +130,40 @@ export default function Footer() {
             </Popover>{" "}
             &{" "}
             <Popover>
-              <PopoverTrigger className="underline" aria-label="Verified App">
-                Caden
+              <PopoverTrigger aria-label="Verified App" className="underline">
+                the team
               </PopoverTrigger>
-              <PopoverContent side="top" className="outline-1 outline-muted">
+              <PopoverContent
+                className="flex w-42 flex-col outline-1 outline-muted"
+                side="top"
+              >
                 <PopoverArrow className="fill-muted" />
-                <span className="font-semibold">Lead Web Developer</span>
-                <span className="flex items-center gap-1">
-                  <BsAt />
-                  1koj
+                <span className="text-center font-semibold underline">
+                  Web Developers
                 </span>
-                <span className="flex items-center gap-1">
-                  <BsEnvelopeAtFill />
-                  caden@brewbot.xyz
+                <span className="flex justify-between">
+                  Caden
+                  <span className="flex items-center">
+                    <BsAt />
+                    c5den
+                  </span>
+                </span>
+                <span className="mt-1 text-center font-semibold underline">
+                  Bot Developers
+                </span>
+                <span className="flex justify-between">
+                  Shades
+                  <span className="flex items-center">
+                    <BsAt />
+                    shxdes0
+                  </span>
+                </span>
+                <span className="flex justify-between">
+                  Jah
+                  <span className="flex items-center">
+                    <BsAt />
+                    deeped
+                  </span>
                 </span>
               </PopoverContent>
             </Popover>

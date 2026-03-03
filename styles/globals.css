@@ -112,14 +112,14 @@
 }
 
 .no-gpu * {
-  --tw-blur: blur(0) !important;
-  --tw-backdrop-blur: blur(0) !important;
+  --tw-blur: blur(0);
+  --tw-backdrop-blur: blur(0);
 }
 @media (prefers-reduced-transparency: reduce) {
   [class^="blur-"],
   [class^="backdrop-blur-"] {
-    --tw-blur: blur(0) !important;
-    --tw-backdrop-blur: blur(0) !important;
+    --tw-blur: blur(0);
+    --tw-backdrop-blur: blur(0);
   }
 }
 
@@ -132,11 +132,11 @@ i > b {
   text-decoration: underline;
 }
 code {
+  display: inline-block;
+  padding: 0 0.2rem;
+  font-weight: 400;
   color: rgb(214, 214, 214);
   background-color: rgba(9, 9, 11, 0.5);
   border: 1px solid rgb(9, 9, 11);
   border-radius: 0.3rem;
-  padding: 0 0.2rem;
-  display: inline-block;
-  font-weight: 400;
 }

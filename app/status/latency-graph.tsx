@@ -1,4 +1,11 @@
-import { CategoryScale, Chart, LinearScale, LineElement, PointElement, Title } from "chart.js";
+import {
+  CategoryScale,
+  Chart,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
+} from "chart.js";
 import { GeistSans } from "geist/font/sans";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";

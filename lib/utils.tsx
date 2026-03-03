@@ -1,10 +1,9 @@
-import { clsx, type ClassValue } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 import Image from "next/image";
+import type { JSX } from "react";
 import Markdown from "react-markdown";
 import { twMerge } from "tailwind-merge";
-
-import { JSX } from "react";
-import { EMOJI_PATTERN } from "./discord";
+import { EMOJI_PATTERN } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -15,18 +14,19 @@ export function absoluteUrl(path: string) {
 }
 
 export function parseEmoji(text: string, size = 20, key?: string) {
-  const extension = text.startsWith("<a:") ? "gif" : "png";
+  const ext = text.charAt(1) === "a" ? "gif" : "png";
   const emojiId = text.match(/\d+/g)?.pop();
+  const emojiName = text.match(/:(\w+):/)?.[1] ?? "emoji";
   return (
     <Image
-      key={key && `${key}-${emojiId}`}
+      alt={emojiName}
       className={cn(`size-[${size}px]`)}
-      src={`https://cdn.discordapp.com/emojis/${emojiId}.${extension}?size=128`}
-      alt={emojiId || "emoji"}
-      width={size}
-      height={size}
       draggable={false}
-      priority
+      height={size}
+      key={key ? `${key}:${emojiId}` : undefined}
+      src={`https://cdn.discordapp.com/emojis/${emojiId}.${ext}?size=128`}
+      unoptimized={ext === "gif"}
+      width={size}
     />
   );
 }
@@ -39,30 +39,44 @@ export function parseInfo(text = "N/A", size = 20) {
   const elements: JSX.Element[] = [];
   let content: JSX.Element[] = [];
 
+  let cursor = 0;
+
   parts.forEach((part, index) => {
     if (index % 2 === 1) {
-      content.push(parseEmoji(part, size, `emoji-${index}`));
-    } else {
-      if (part) {
-        const subparts = part.split("\n");
-        subparts.forEach((subpart, subindex) => {
-          content.push(<Markdown key={`${index}-${subindex}`}>{subpart}</Markdown>);
-          if (subindex < subparts.length - 1) {
-            elements.push(
-              <span key={`${index}-${subindex}-newline`} className="flex space-x-1.5 items-start">
-                {content}
-              </span>,
-            );
-            content = [];
-          }
-        });
-      }
+      const k = `emoji:${cursor}`;
+      content.push(parseEmoji(part, size, k));
+      cursor += part.length;
+      return;
     }
+
+    if (!part) return;
+
+    const subparts = part.split("\n");
+    subparts.forEach((subpart, subindex) => {
+      const start = cursor;
+
+      if (subpart) {
+        content.push(<Markdown key={`md:${start}`}>{subpart}</Markdown>);
+      }
+
+      cursor += subpart.length;
+
+      if (subindex < subparts.length - 1) {
+        cursor += 1;
+
+        elements.push(
+          <span className="flex items-start space-x-1.5" key={`br:${start}`}>
+            {content}
+          </span>,
+        );
+        content = [];
+      }
+    });
   });
 
   if (content.length > 0) {
     elements.push(
-      <span key="content" className="flex space-x-1.5 items-center">
+      <span className="flex items-center space-x-1.5" key={`tail:${cursor}`}>
         {content}
       </span>,
     );

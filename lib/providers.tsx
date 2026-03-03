@@ -1,19 +1,20 @@
 "use client";
+import type { QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
+import { usePathname } from "next/navigation";
+import { ThemeProvider } from "next-themes";
+import { useEffect, useState } from "react";
+import SuperJSON from "superjson";
 // ^-- to make sure we can mount the Provider from a server component
 import Footer from "@/app/components/footer";
 import Scrollbars from "@/app/components/scrollbars";
 import { useGpuTier } from "@/hooks/use-gpu-tier";
 import type { AppRouter } from "@/server/routers/_app";
-import type { QueryClient } from "@tanstack/react-query";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { createTRPCClient, httpBatchLink, loggerLink } from "@trpc/client";
-import { ThemeProvider } from "next-themes";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import SuperJSON from "superjson";
 import { makeQueryClient } from "./query-client";
 import { trpc } from "./trpc";
+
 let browserQueryClient: QueryClient;
 function getQueryClient() {
   if (typeof window === "undefined") {
@@ -24,13 +25,19 @@ function getQueryClient() {
   // This is very important, so we don't re-make a new client if React
   // suspends during the initial render. This may not be needed if we
   // have a suspense boundary BELOW the creation of the query client
-  if (!browserQueryClient) browserQueryClient = makeQueryClient();
+  if (!browserQueryClient) {
+    browserQueryClient = makeQueryClient();
+  }
   return browserQueryClient;
 }
 function getUrl() {
   const base = (() => {
-    if (typeof window !== "undefined") return "";
-    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+    if (typeof window !== "undefined") {
+      return "";
+    }
+    if (process.env.VERCEL_URL) {
+      return `https://${process.env.VERCEL_URL}`;
+    }
     return "http://localhost:3000";
   })();
   return `${base}/api/trpc`;
@@ -46,7 +53,7 @@ export default function Providers(
   //       render if it suspends and there is no boundary
   const queryClient = getQueryClient();
   const pathname = usePathname();
-  const shouldShowFooter = pathname !== "/";
+  const shouldShowFooter = pathname !== "/" && !pathname.endsWith("test");
   const gpuTier = useGpuTier();
   const [trpcClient] = useState(() =>
     createTRPCClient<AppRouter>({
@@ -60,12 +67,19 @@ export default function Providers(
     }),
   );
   useEffect(() => {
-    if (gpuTier.tier < 2) document.documentElement.classList.add("no-gpu");
+    if (gpuTier.tier < 2) {
+      document.documentElement.classList.add("no-gpu");
+    }
     return () => document.documentElement.classList.remove("no-gpu");
   }, [gpuTier.tier]);
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        disableTransitionOnChange
+        enableSystem
+      >
         <trpc.Provider client={trpcClient} queryClient={queryClient}>
           <Scrollbars />
           {props.children}

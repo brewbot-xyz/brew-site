@@ -4,7 +4,8 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Brew",
     short_name: "Brew",
-    description: "The best all-in-one bot for keeping your community safe and engaged.",
+    description:
+      "The best all-in-one bot for keeping your community safe and engaged.",
     start_url: "/",
     icons: [
       {

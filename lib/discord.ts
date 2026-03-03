@@ -1,31 +1,74 @@
-export const EMOJI_PATTERN = /(<a?:\w+:\d+>)/g;
-export const OWNER_IDS = ["195932866134147072", "1174677160582185003"]; // okay to be hardcoded, only used for the demo users
+import "server-only";
+import { env } from "./env";
+
+type DiscordErrorBody =
+  | { message?: string; code?: number; errors?: unknown }
+  | unknown;
 
 export class DiscordClient {
   public readonly baseURL: string = "https://discord.com/api/v10";
-  private apiKey: string;
+  private authHeader: string;
 
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
+  constructor(token: string) {
+    this.authHeader = `Bot ${token}`;
   }
 
-  async request<T>(url: string, options: RequestInit = {}): Promise<T> {
-    const finalOptions = {
-      baseURL: this.baseURL,
-      ...options,
-      headers: {
-        Authorization: this.apiKey,
-        ...options.headers,
-      },
-    };
+  private buildUrl(path: string) {
+    return path.startsWith("http") ? path : `${this.baseURL}${path}`;
+  }
 
-    const response = await fetch(this.baseURL + url, finalOptions);
+  async request<T>(
+    path: string,
+    options: RequestInit & { timeoutMs?: number } = {},
+  ): Promise<T> {
+    const { timeoutMs = 10_000, ...init } = options;
 
-    if (!response.ok) {
-      const errorBody = await response.text();
-      throw new Error(`[DiscordClient Error] status: ${response.status}, body: ${errorBody}`);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      const res = await fetch(this.buildUrl(path), {
+        ...init,
+        signal: controller.signal,
+        headers: {
+          Authorization: this.authHeader,
+          // only set JSON content-type when caller didn't provide it
+          ...(init.body && !(init.headers as any)?.["Content-Type"]
+            ? { "Content-Type": "application/json" }
+            : null),
+          ...(init.headers ?? {}),
+        },
+      });
+
+      // Handle 204
+      if (res.status === 204) return undefined as T;
+
+      const contentType = res.headers.get("content-type") ?? "";
+      const isJson = contentType.includes("application/json");
+
+      const body: DiscordErrorBody = isJson
+        ? await res.json()
+        : await res.text();
+
+      if (!res.ok) {
+        // Minimal, structured error (don’t dump huge bodies by default)
+        const msg =
+          typeof body === "string"
+            ? body.slice(0, 500)
+            : ((body as any)?.message ?? "Discord API request failed");
+
+        const err = new Error(
+          `[DiscordClient] ${res.status} ${res.statusText}: ${msg}`,
+        );
+        (err as any).status = res.status;
+        (err as any).body = body;
+        throw err;
+      }
+
+      return body as T;
+    } finally {
+      clearTimeout(timeout);
     }
-    return response.json() as Promise<T>;
   }
 
   async get<T>(url: string, options = {}) {
@@ -45,5 +88,5 @@ export class DiscordClient {
   }
 }
 
-const discord = new DiscordClient(`Bot ${process.env.DISCORD_TOKEN}`);
+const discord = new DiscordClient(env.DISCORD_TOKEN);
 export default discord;

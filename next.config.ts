@@ -1,32 +1,17 @@
 import type { NextConfig } from "next";
 
-import env from "./env";
-
 const nextConfig: NextConfig = {
   output: "standalone",
+  reactCompiler: true,
   images: {
     remotePatterns: [
       {
         hostname: "cdn.discordapp.com",
-        pathname: "/**/*",
-        protocol: "https",
-      },
-      {
-        hostname: "assets.aceternity.com",
-        pathname: "/demos/*",
+        pathname: "/(emojis|avatars|embed|icons)/**/*",
         protocol: "https",
       },
     ],
-  },
-  env: Object.entries(env).reduce((acc, [key, value]) => {
-    if (key.startsWith("__") || key.startsWith("NODE_") || key === "NEXT_RUNTIME") return acc;
-    return {
-      ...acc,
-      [key]: `${value}`,
-    };
-  }, {}),
-  experimental: {
-    reactCompiler: true,
+    qualities: [80],
   },
 };
 

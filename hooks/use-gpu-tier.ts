@@ -1,4 +1,4 @@
-import { getGPUTier, TierResult } from "detect-gpu";
+import { getGPUTier, type TierResult } from "detect-gpu";
 import { useEffect, useState } from "react";
 
 const useGpuTier = () => {

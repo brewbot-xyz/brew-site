@@ -1,8 +1,9 @@
 /**
  * This file contains the tRPC http response handler and context creation for Next.js
  */
-import { appRouter } from "@/server/routers/_app";
+
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import { appRouter } from "@/server/routers/_app";
 
 const handler = (req: Request) =>
   fetchRequestHandler({

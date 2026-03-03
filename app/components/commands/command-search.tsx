@@ -1,11 +1,6 @@
-import { Button } from "@/app/components/button";
-import { DialogBox, DialogTrigger } from "@/app/components/dialog";
-import { Input } from "@/app/components/input";
-import { CategoryName, Command } from "@/lib/resources";
-import { cn } from "@/lib/utils";
 import _ from "lodash";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
-import { JSX, useState } from "react";
+import { type JSX, useState } from "react";
 import {
   BsCircle,
   BsGearWideConnected,
@@ -17,6 +12,11 @@ import {
   BsTools,
 } from "react-icons/bs";
 import removeMd from "remove-markdown";
+import { Button } from "@/app/components/button";
+import { DialogBox, DialogTrigger } from "@/app/components/dialog";
+import { Input } from "@/app/components/input";
+import type { CategoryName, Command } from "@/lib/resources";
+import { cn } from "@/lib/utils";
 
 export const categoryMap: Record<keyof typeof CategoryName, JSX.Element> = {
   UTILITIES: <BsGearWideConnected />,
@@ -37,7 +37,10 @@ export default function CommandSearch({
   const [query, setQuery] = useState("");
 
   const results = categories
-    .map<[string, Command[]]>((c) => [c.name, c.commands.filter((cmd) => cmd.name.includes(query))])
+    .map<[string, Command[]]>((c) => [
+      c.name,
+      c.commands.filter((cmd) => cmd.name.includes(query)),
+    ])
     .filter(([, cmds]) => cmds.length > 0);
 
   return (
@@ -46,35 +49,41 @@ export default function CommandSearch({
       showCloseButton={false}
     >
       <Input
-        id="name"
-        placeholder="Command Search"
         className={cn(
           "transition-all",
-          results.length > 0 ? "rounded-none rounded-t-xl border-0 border-b" : "rounded-xl",
+          results.length > 0
+            ? "rounded-none rounded-t-xl border-0 border-b"
+            : "rounded-xl",
         )}
+        id="name"
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Command Search"
         startIcon={<BsSearch />}
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
       />
       <OverlayScrollbarsComponent
-        element="div"
-        className={cn(results.length > 0 ? "my-2 flex flex-col px-2" : "hidden")}
+        className={cn(
+          results.length > 0 ? "my-2 flex flex-col px-2" : "hidden",
+        )}
         defer
+        element="div"
       >
         {results.flatMap(([category, commands]) =>
           commands.map((cmd) => (
-            <DialogTrigger key={cmd.name} asChild>
+            <DialogTrigger asChild key={cmd.name}>
               <Button
+                className="mt-0.5 flex w-full justify-between space-x-10 text-muted-foreground hover:text-white"
                 onClick={() => setSelected(cmd)}
                 size="sm"
                 variant="ghost"
-                className="mt-0.5 flex w-full justify-between space-x-10 text-muted-foreground hover:text-white"
               >
                 <span className="flex items-center gap-1.5 text-white">
                   {_.get(categoryMap, category, <BsCircle />)}
                   {cmd.name}
                 </span>
-                <span className="truncate text-right font-light">{removeMd(cmd.description)}</span>
+                <span className="truncate text-right font-light">
+                  {removeMd(cmd.description)}
+                </span>
               </Button>
             </DialogTrigger>
           )),

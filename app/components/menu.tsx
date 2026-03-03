@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 export const Menu = ({
   children,
@@ -11,7 +11,7 @@ export const Menu = ({
   return (
     <nav
       className={cn(
-        "relative flex justify-between rounded-none border-0 border-secondary-accent bg-background/70 px-6 pb-4 pt-2 shadow-input backdrop-blur-md md:bg-transparent md:backdrop-blur-none md:border-2 md:py-3",
+        "relative flex justify-between rounded-none border-0 border-secondary-accent bg-background/70 px-6 pt-2 pb-4 shadow-input backdrop-blur-md md:border-2 md:bg-transparent md:py-3 md:backdrop-blur-none",
         className,
       )}
     >
@@ -32,7 +32,7 @@ export const HoveredLink = ({
     <Link
       {...rest}
       className={cn(
-        "cursor-pointer text-foreground transition-colors hover:text-vibrant rounded-full",
+        "cursor-pointer rounded-full text-foreground transition-colors hover:text-vibrant",
         className,
       )}
     >

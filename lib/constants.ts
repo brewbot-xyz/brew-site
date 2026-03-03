@@ -1,5 +1,16 @@
 import { cva } from "class-variance-authority";
-import { Transition } from "motion/react";
+import type { Transition } from "motion/react";
+
+/**
+ * Discord constants
+ */
+export const EMOJI_PATTERN = /(<a?:\w+:\d+>)/g;
+export const OWNER_IDS = [
+  "978829705442639934", // Jesse
+  "1432147640434556979", // Caden
+  "705545572299571220", // Shades
+  "138787770825965568", // Jah
+] as const; // okay to be hardcoded, only used for the demo users
 
 /**
  * Default transition for the app

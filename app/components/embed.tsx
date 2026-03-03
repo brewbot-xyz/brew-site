@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import moment from "moment";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import AppTag from "./app-tag";
 import { Card, CardContent } from "./card";
 import { DialogBox } from "./dialog";
@@ -24,12 +24,11 @@ export default function Embed({
   header?: boolean;
 }) {
   return (
-    <div
+    <article
       className={cn(
-        "relative flex flex-col space-x-4 break-words text-left min-w-sm w-full",
+        "relative flex w-full min-w-sm flex-col space-x-4 break-words text-left",
         className,
       )}
-      role="article"
     >
       <Dialog>
         <DialogBox showCloseButton={false}>
@@ -37,32 +36,35 @@ export default function Embed({
         </DialogBox>
         {header && (
           <DialogTrigger asChild>
-            <div className="absolute -left-16 flex flex-col space-y-2" aria-hidden="true">
+            <div
+              aria-hidden="true"
+              className="absolute -left-16 flex flex-col space-y-2"
+            >
               {user && (
-                <div className="ml-6 mt-3 h-3 w-9 rounded-tl-lg border-l-2 border-t-2 border-white/15"></div>
+                <div className="mt-3 ml-6 h-3 w-9 rounded-tl-lg border-white/15 border-t-2 border-l-2" />
               )}
               <div className="relative h-12 w-12">
                 <Image
-                  draggable={false}
-                  src="/assets/brew.png"
                   alt="Brew's Avatar"
+                  className="aspect-square cursor-pointer rounded-full object-cover hover:mt-[2px]"
+                  draggable={false}
                   fill
-                  className="aspect-square cursor-pointer rounded-full hover:mt-[2px] object-cover"
+                  src="/assets/brew.png"
                 />
               </div>
             </div>
           </DialogTrigger>
         )}
         <div className="flex flex-col gap-2">
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2">
             {user && (
               <div className="flex items-center gap-1">
                 <Image
-                  src={user.avatarUrl}
                   alt={`@${user.name}`}
-                  width={20}
-                  height={20}
                   className="inline-block size-5 cursor-pointer rounded-full opacity-50"
+                  height={20}
+                  src={user.avatarUrl}
+                  width={20}
                 />
                 <span className="font-normal text-white/50">@{user.name}</span>
               </div>
@@ -71,17 +73,20 @@ export default function Embed({
           </div>
           <h2
             className={cn(
-              "flex items-center gap-1.5 text-base font-normal",
-              header ? "" : " invisible",
+              "flex items-center gap-1.5 font-normal text-base",
+              header ? "" : "invisible",
             )}
           >
             <DialogTrigger asChild>
-              <span className="cursor-pointer hover:underline" aria-hidden="true">
+              <span
+                aria-hidden="true"
+                className="cursor-pointer hover:underline"
+              >
                 Brew
               </span>
             </DialogTrigger>
             <AppTag />
-            <span className="text-xs text-white/50">
+            <span className="text-white/50 text-xs">
               <span>{moment(Date.now()).calendar()}</span>
             </span>
           </h2>
@@ -90,6 +95,6 @@ export default function Embed({
           </Card>
         </div>
       </Dialog>
-    </div>
+    </article>
   );
 }

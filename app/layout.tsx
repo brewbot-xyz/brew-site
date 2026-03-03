@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
-
+import { env } from "@/lib/env";
 import Providers from "@/lib/providers";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import { GeistMono } from "geist/font/mono";
+import type { Metadata } from "next";
 import { Lexend } from "next/font/google";
+import Script from "next/script";
 import "overlayscrollbars/overlayscrollbars.css";
+import manifest from "./manifest";
 
 const lexend = Lexend({
   subsets: ["latin"],
@@ -16,15 +18,15 @@ const lexend = Lexend({
 export const metadata: Metadata = {
   title: {
     default: "Brew",
-    template: `%s - Brew`,
+    template: "%s - Brew",
   },
   metadataBase: new URL("https://brewbot.xyz"),
-  description: "The best all-in-one bot for keeping your community safe and engaged.",
+  description: manifest().description,
   openGraph: {
     locale: "en_US",
     url: "https://brewbot.xyz",
     title: "Brew",
-    description: "The best all-in-one bot for keeping your community safe and engaged.",
+    description: manifest().description,
     siteName: "brewbot.xyz",
     images: [
       {
@@ -54,12 +56,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* <head>
-        <Script crossOrigin="anonymous" src="//unpkg.com/react-scan/dist/auto.global.js" />
-      </head> */}
+      {env.NEXT_PUBLIC_APP_ENV !== "production" && (
+        <head>
+          <Script
+            crossOrigin="anonymous"
+            src="//unpkg.com/react-scan/dist/auto.global.js"
+          />
+        </head>
+      )}
       <body
         className={cn(
-          "min-h-screen bg-background text-foreground subpixel-antialiased font-sans",
+          "min-h-screen bg-background font-sans text-foreground subpixel-antialiased",
           lexend.variable,
           GeistMono.variable,
         )}

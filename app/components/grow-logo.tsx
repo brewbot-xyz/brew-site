@@ -1,9 +1,8 @@
 "use client";
 
 import { motion, useAnimate, useInView } from "motion/react";
-import { useEffect } from "react";
-
 import Image from "next/image";
+import { useEffect } from "react";
 
 export const GrowLogo = () => {
   const [scope, animate] = useAnimate();
@@ -29,16 +28,16 @@ export const GrowLogo = () => {
 
   return (
     <div ref={scope}>
-      <motion.div initial={{ display: "none" }} className="inline z-50">
+      <motion.div className="z-50 inline" initial={{ display: "none" }}>
         <Image
+          alt="Brew"
           className="drop-shadow-lg"
           draggable={false}
-          src="/assets/hero-logo.png"
-          alt="Brew"
-          width={500}
           height={500}
-          quality={100}
           loading="lazy"
+          quality={80}
+          src="/assets/hero-logo.png"
+          width={500}
         />
       </motion.div>
     </div>

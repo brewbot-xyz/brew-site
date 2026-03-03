@@ -1,10 +1,23 @@
 "use client";
+import { motion } from "motion/react";
+import type React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createNoise3D } from "simplex-noise";
 import { useGpuTier } from "@/hooks/use-gpu-tier";
 import { transition } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { motion } from "motion/react";
-import React, { useEffect, useRef, useState } from "react";
-import { createNoise3D } from "simplex-noise";
+
+const getSpeed = (speed: "slow" | "fast") => {
+  switch (speed) {
+    case "slow":
+      return 0.001;
+    case "fast":
+      return 0.002;
+    default:
+      return 0.001;
+  }
+};
+
 export const WavyBackground = ({
   children,
   className,
@@ -28,68 +41,52 @@ export const WavyBackground = ({
 }) => {
   const gpuTier = useGpuTier();
   const noise = createNoise3D();
-  let w: number,
-    h: number,
-    nt: number,
-    i: number,
-    x: number,
-    ctx: CanvasRenderingContext2D,
-    canvas: HTMLCanvasElement | null;
+  let w: number = -1,
+    h: number = -1,
+    nt: number = -1,
+    i: number = -1,
+    x: number = -1,
+    ctx: CanvasRenderingContext2D = null as unknown as CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement | null = null;
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const getSpeed = () => {
-    switch (speed) {
-      case "slow":
-        return 0.001;
-      case "fast":
-        return 0.002;
-      default:
-        return 0.001;
-    }
-  };
 
-  const init = () => {
-    canvas = canvasRef.current;
-    ctx = canvas?.getContext("2d") as CanvasRenderingContext2D;
-    w = ctx.canvas.width = window.innerWidth;
-    h = ctx.canvas.height = window.innerHeight;
-    ctx.filter = `blur(${blur}px)`;
-    nt = 0;
-    window.onresize = function () {
-      w = ctx.canvas.width = window.innerWidth;
-      h = ctx.canvas.height = window.innerHeight;
-      ctx.filter = `blur(${blur}px)`;
-    };
-    render();
-  };
+  const waveColors = colors ?? [
+    "#38bdf8",
+    "#818cf8",
+    "#c084fc",
+    "#e879f9",
+    "#22d3ee",
+  ];
 
-  const waveColors = colors ?? ["#38bdf8", "#818cf8", "#c084fc", "#e879f9", "#22d3ee"];
-
-  const drawWave = (n: number) => {
-    nt += getSpeed();
-    for (i = 0; i < n; i++) {
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(0, h);
-      for (x = 0; x < w; x += 5) {
-        const y = noise(x / 800, 0.3 * i, nt) * 100 * 2;
-        ctx.lineTo(x, y + h * 0.5);
+  const drawWave = useCallback(
+    (n: number) => {
+      nt += getSpeed(speed);
+      for (i = 0; i < n; i++) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(0, h);
+        for (x = 0; x < w; x += 5) {
+          const y = noise(x / 1200, 0.3 * i, nt) * 100 * 2;
+          ctx.lineTo(x, y + h * 0.5);
+        }
+        ctx.lineTo(w, h);
+        ctx.lineTo(0, h);
+        ctx.closePath();
+        ctx.fillStyle = waveColors[i % waveColors.length];
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#ad6024";
+        ctx.shadowColor = "#ad6024";
+        ctx.shadowBlur = 36;
+        ctx.stroke();
+        ctx.restore();
       }
-      ctx.lineTo(w, h);
-      ctx.lineTo(0, h);
-      ctx.closePath();
-      ctx.fillStyle = waveColors[i % waveColors.length];
-      ctx.fill();
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = "#ad6024";
-      ctx.shadowColor = "#ad6024";
-      ctx.shadowBlur = 36;
-      ctx.stroke();
-      ctx.restore();
-    }
-  };
+    },
+    [ctx, h, i, noise, nt, w, waveColors, x, speed],
+  );
 
-  let animationId: number;
-  const render = () => {
+  let animationId: number = -1;
+  const render = useCallback(() => {
     ctx.clearRect(0, 0, w, h);
     ctx.fillStyle = backgroundFill || "transparent";
     ctx.globalAlpha = waveOpacity || 0.5;
@@ -99,7 +96,22 @@ export const WavyBackground = ({
     if (gpuTier.tier > 1) {
       animationId = requestAnimationFrame(render);
     }
-  };
+  }, [backgroundFill, ctx, drawWave, gpuTier.tier, h, w, waveOpacity]);
+
+  const init = useCallback(() => {
+    canvas = canvasRef.current;
+    ctx = canvas?.getContext("2d") as CanvasRenderingContext2D;
+    w = ctx.canvas.width = window.innerWidth;
+    h = ctx.canvas.height = window.innerHeight;
+    ctx.filter = `blur(${blur}px)`;
+    nt = 0;
+    window.onresize = () => {
+      w = ctx.canvas.width = window.innerWidth;
+      h = ctx.canvas.height = window.innerHeight;
+      ctx.filter = `blur(${blur}px)`;
+    };
+    render();
+  }, [blur, canvas, ctx, render]);
 
   useEffect(() => {
     init();
@@ -107,7 +119,7 @@ export const WavyBackground = ({
       cancelAnimationFrame(animationId);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [init]);
+  }, [init, animationId]);
 
   const [isSafari, setIsSafari] = useState(false);
   useEffect(() => {
@@ -121,28 +133,31 @@ export const WavyBackground = ({
 
   return (
     <div
-      className={cn("flex h-screen flex-col items-center justify-center -z-50", containerClassName)}
+      className={cn(
+        "-z-50 flex h-screen flex-col items-center justify-center",
+        containerClassName,
+      )}
     >
-      <div className="w-full h-full fixed inset-0 bg-radial-[at_90%] from-primary to-background" />
+      <div className="fixed inset-0 h-full w-full bg-radial-[at_90%] from-primary to-background" />
       <motion.canvas
+        animate={{ scale: 1.02, opacity: 1 }}
         className="fixed -bottom-48 z-0"
+        id="canvas"
         initial={{ scale: 2, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
+        ref={canvasRef}
+        style={{
+          ...(isSafari ? { filter: `blur(${blur}px)` } : {}),
+        }}
         transition={{
           duration: 0.3,
           ease: "easeInOut",
         }}
-        ref={canvasRef}
-        id="canvas"
-        style={{
-          ...(isSafari ? { filter: `blur(${blur}px)` } : {}),
-        }}
-      ></motion.canvas>
+      />
       <motion.div
-        initial={{ overflow: "hidden" }}
         animate={{ overflow: "inherit" }}
-        transition={{ delay: transition.delay + transition.duration }}
         className={cn("relative z-10", className)}
+        initial={{ overflow: "hidden" }}
+        transition={{ delay: transition.delay + transition.duration }}
         {...props}
       >
         {children}

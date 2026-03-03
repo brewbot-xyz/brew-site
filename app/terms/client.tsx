@@ -1,7 +1,7 @@
 "use client";
 
-import Navbar from "@/app/components/navbar";
 import Markdown from "react-markdown";
+import Navbar from "@/app/components/navbar";
 
 const TERMS_OF_SERVICE = `
 # Terms of Service Agreement
@@ -150,7 +150,7 @@ export default function TermsOfService() {
   return (
     <div className="relative flex min-h-screen w-full flex-col items-center antialiased">
       <Navbar />
-      <div className="mb-16 flex md:pt-32 max-w-4xl flex-col gap-3 bg-background p-4">
+      <div className="mb-16 flex max-w-4xl flex-col gap-3 bg-background p-4 md:pt-32">
         <div className="prose prose-invert max-w-none">
           <Markdown>{TERMS_OF_SERVICE}</Markdown>
         </div>
