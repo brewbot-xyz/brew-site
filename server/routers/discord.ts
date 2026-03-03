@@ -1,5 +1,4 @@
 import type { TRPCRouterRecord } from "@trpc/server";
-import _ from "lodash";
 import { OWNER_IDS } from "@/lib/constants";
 import bot from "@/lib/discord";
 import type { APIGuild, Guild, User } from "@/lib/resources";

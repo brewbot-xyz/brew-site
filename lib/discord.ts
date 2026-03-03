@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: allow modifying vague err object */
 import "server-only";
 import { env } from "./env";
 
@@ -32,7 +33,6 @@ export class DiscordClient {
         signal: controller.signal,
         headers: {
           Authorization: this.authHeader,
-          // only set JSON content-type when caller didn't provide it
           ...(init.body && !(init.headers as any)?.["Content-Type"]
             ? { "Content-Type": "application/json" }
             : null),
@@ -40,7 +40,6 @@ export class DiscordClient {
         },
       });
 
-      // Handle 204
       if (res.status === 204) return undefined as T;
 
       const contentType = res.headers.get("content-type") ?? "";
@@ -51,7 +50,6 @@ export class DiscordClient {
         : await res.text();
 
       if (!res.ok) {
-        // Minimal, structured error (don’t dump huge bodies by default)
         const msg =
           typeof body === "string"
             ? body.slice(0, 500)

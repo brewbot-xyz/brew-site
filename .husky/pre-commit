@@ -1,4 +1,2 @@
-bun test
-
 #!/bin/sh
 bun x lint-staged

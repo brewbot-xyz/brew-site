@@ -12,6 +12,7 @@ import Footer from "@/app/components/footer";
 import Scrollbars from "@/app/components/scrollbars";
 import { useGpuTier } from "@/hooks/use-gpu-tier";
 import type { AppRouter } from "@/server/routers/_app";
+import { env } from "./env";
 import { makeQueryClient } from "./query-client";
 import { trpc } from "./trpc";
 
@@ -58,7 +59,7 @@ export default function Providers(
   const [trpcClient] = useState(() =>
     createTRPCClient<AppRouter>({
       links: [
-        loggerLink(),
+        ...(env.NEXT_PUBLIC_APP_ENV === "development" ? [loggerLink()] : []),
         httpBatchLink({
           transformer: SuperJSON,
           url: getUrl(),

@@ -92,7 +92,6 @@ export const WavyBackground = ({
     ctx.globalAlpha = waveOpacity || 0.5;
     ctx.fillRect(0, 0, w, h);
     drawWave(5);
-    console.log("rendering wave background", gpuTier.tier);
     if (gpuTier.tier > 1) {
       animationId = requestAnimationFrame(render);
     }
