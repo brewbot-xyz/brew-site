@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/app/components/button";
-import Navbar from "@/app/components/navbar";
+import { Button } from "@/components/ui/button";
+import Navbar from "@/components/navbar";
 import Link from "next/link";
 import { BsQuestionCircleFill } from "react-icons/bs";
 

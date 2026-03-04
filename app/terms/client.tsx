@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar from "@/app/components/navbar";
+import Navbar from "@/components/navbar";
 import Markdown from "react-markdown";
 
 const TERMS_OF_SERVICE = `

@@ -1,7 +1,7 @@
 import { parseEmoji } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
-import { Button } from "../button";
+import { Button } from "./ui/button";
 
 enum RepeatMode {
   OFF,

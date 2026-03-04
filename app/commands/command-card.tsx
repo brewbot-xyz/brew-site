@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/app/components/card";
-import { DialogTrigger } from "@/app/components/dialog";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { DialogTrigger } from "@/components/ui/dialog";
 import removeMd from "remove-markdown";
 import { Command } from "@/lib/resources";
 

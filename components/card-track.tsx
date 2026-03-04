@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import React from "react";
 import { BsCircleFill } from "react-icons/bs";
-import { getMiddleValues, useRotatingQueue } from "../../hooks/use-rotating-queue";
+import { getMiddleValues, useRotatingQueue } from "../hooks/use-rotating-queue";
 import DiscordCommunity from "./icons/discord-community";
 import { useGpuTier } from "@/hooks/use-gpu-tier";
 

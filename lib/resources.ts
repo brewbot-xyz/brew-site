@@ -80,6 +80,7 @@ export interface Guild {
   permissions: string;
   features: string[];
   memberCount: number;
+  onlineCount: number;
 }
 
 export interface APIGuild {

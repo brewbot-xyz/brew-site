@@ -14,7 +14,7 @@ import {
 import { motion } from "motion/react";
 import { Button } from "./button";
 import AppTag from "./app-tag";
-import DiscordAppsIcon from "./icons/discord-apps";
+import DiscordAppsIcon from "../icons/discord-apps";
 
 export default function Profile() {
   return (

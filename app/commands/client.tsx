@@ -4,16 +4,16 @@ import _ from "lodash";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { BsChevronDown, BsCircle, BsSearch } from "react-icons/bs";
 
-import { Badge } from "@/app/components/badge";
-import { Button } from "@/app/components/button";
-import { Dialog, DialogTrigger } from "@/app/components/dialog";
-import DiscordAppsIcon from "@/app/components/icons/discord-apps";
-import Navbar from "@/app/components/navbar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import DiscordAppsIcon from "@/components/icons/discord-apps";
+import Navbar from "@/components/navbar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Command } from "@/lib/resources";
 import { trpc } from "@/lib/trpc";
 
-import { Popover, PopoverContent, PopoverTrigger } from "../components/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../../components/ui/popover";
 import Loading from "../loading";
 import CommandCard from "./command-card";
 import CommandDialog from "./command-dialog";

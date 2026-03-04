@@ -1,6 +1,7 @@
 /**
  * This file contains the tRPC http response handler and context creation for Next.js
  */
+import { createContext } from "@/server/context";
 import { appRouter } from "@/server/routers/_app";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
@@ -9,6 +10,7 @@ const handler = (req: Request) =>
     router: appRouter,
     req,
     endpoint: "/api/trpc",
+    createContext,
     /**
      * @see https://trpc.io/docs/v11/error-handling
      */

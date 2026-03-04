@@ -4,7 +4,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/app/components/dialog";
+} from "@/components/ui/dialog";
 import { Command } from "@/lib/resources";
 import { parseInfo } from "@/lib/utils";
 import { motion, useAnimationControls } from "motion/react";

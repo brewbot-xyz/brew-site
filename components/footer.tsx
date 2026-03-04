@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { BsAt, BsDiscord, BsEnvelopeAtFill, BsGithub, BsTwitterX } from "react-icons/bs";
-import { Popover, PopoverArrow, PopoverContent, PopoverTrigger } from "./popover";
+import { Popover, PopoverArrow, PopoverContent, PopoverTrigger } from "./ui/popover";
 import Image from "next/image";
 
 export default function Footer() {

@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/app/components/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/card";
-import { Input } from "@/app/components/input";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import LatencyGraph from "@/app/status/latency-graph";
-import Navbar from "@/app/components/navbar";
+import Navbar from "@/components/navbar";
 import { trpc } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 

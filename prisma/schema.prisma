@@ -1,0 +1,195 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model autoresponders {
+  server BigInt?
+  name   String?
+  reply  String?
+  type   String?
+
+  @@ignore
+}
+
+model blacklisted_users {
+  user_id BigInt @id @default(autoincrement())
+}
+
+model brew {
+  user_id         BigInt  @id @default(autoincrement())
+  nwords          BigInt? @default(0)
+  hardr           BigInt? @default(0)
+  minigame_status String? @default("declined")
+  cooldowns       String? @default("{}")
+  afk_status      String? @default("{}")
+  afk_config      String? @default("{}")
+  rank_config     String? @default("{}")
+  config          String
+  subscriptions   String
+}
+
+model dev_stuff {
+  id                Int     @id @default(autoincrement())
+  blacklisted_users String?
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model embeds {
+  server BigInt?
+  name   String?
+  embed  String?
+
+  @@ignore
+}
+
+model error_codes {
+  error_codes String @id
+}
+
+model lastfm {
+  user_id String  @id
+  name    String?
+  sk      String?
+}
+
+model member_vars {
+  user_id       BigInt
+  server_id     BigInt
+  warnings      BigInt? @default(0)
+  level_config  String? @default("{}")
+  member_config String? @default("{}")
+  wallet        BigInt
+
+  @@id([user_id, server_id])
+  @@unique([user_id, server_id], map: "membervars_user_id_server_id")
+}
+
+model minigame_variables {
+  user_id               BigInt  @id @default(autoincrement())
+  user                  String? @default("{\"balance\":0,\"bank\":0,\"damage\":0,\"defense\":0,\"equipped\":0,\"health\":100,\"max_health\":100,\"crit_chance\":4,\"dodge_chance\":1}")
+  wood                  BigInt? @default(0)
+  rock                  BigInt? @default(0)
+  wheat                 BigInt? @default(0)
+  apple                 BigInt? @default(0)
+  banana                BigInt? @default(0)
+  bread                 BigInt? @default(0)
+  meat                  BigInt? @default(0)
+  steak                 BigInt? @default(0)
+  banana_apple_smoothie BigInt? @default(0)
+  mushroom              BigInt? @default(0)
+  soup                  BigInt? @default(0)
+  glass                 BigInt? @default(0)
+  health_potion         BigInt? @default(0)
+  glowing_health_potion BigInt? @default(0)
+  rod                   String? @default("{\"amount\":0,\"level\":0,\"modifier\":\"null\",\"rarity\":\"common\"}")
+  minnow                BigInt? @default(0)
+  cod                   BigInt? @default(0)
+  salmon                BigInt? @default(0)
+  metal                 BigInt? @default(0)
+  gold                  BigInt? @default(0)
+  tungsten              BigInt? @default(0)
+  silver                BigInt? @default(0)
+  topaz                 BigInt? @default(0)
+  emerald               BigInt? @default(0)
+  ruby                  BigInt? @default(0)
+  crystal_heart         BigInt? @default(0)
+  health_shard          BigInt? @default(0)
+  pearl                 BigInt? @default(0)
+  black_pearl           BigInt? @default(0)
+  rainbow_pearl         BigInt? @default(0)
+  crystal               BigInt? @default(0)
+  health_relic          BigInt? @default(0)
+  defense_relic         BigInt? @default(0)
+  damage_relic          BigInt? @default(0)
+  leather               BigInt? @default(0)
+  teeth                 BigInt? @default(0)
+  feather               BigInt? @default(0)
+  pickaxe               BigInt?
+  anvil                 BigInt? @default(0)
+  platinum              BigInt? @default(0)
+  milk                  BigInt? @default(1)
+  strawberry            BigInt? @default(0)
+  grapes                BigInt? @default(0)
+  upgrade_bar           BigInt? @default(0)
+  burger                BigInt? @default(0)
+  minigame_settings     String? @default("{\"inventory\":{\"frontpage\":{\"1\":\"coffee\"}}}")
+  weapons               String? @default("{}")
+  common_crate          BigInt? @default(0)
+  biome                 String? @default("forest")
+  boss_info             String? @default("{\"health\":0,\"name\":\"none\"}")
+  golden_cod            BigInt? @default(0)
+  bass                  BigInt? @default(0)
+  tuna                  BigInt? @default(0)
+  oyster                BigInt? @default(0)
+  rare_crate            BigInt? @default(0)
+  bone                  BigInt? @default(0)
+  coffee                BigInt? @default(1)
+  coffee_bean           BigInt? @default(3)
+  campfire              BigInt? @default(0)
+  cooked_cod            BigInt? @default(0)
+  cooked_salmon         BigInt? @default(0)
+  cooked_bass           BigInt? @default(0)
+  cooked_tuna           BigInt? @default(0)
+  shell                 BigInt? @default(0)
+  damage_shard          BigInt? @default(0)
+  defense_shard         BigInt? @default(0)
+  fishes                String
+  real_pickaxe          String
+  gunpowder             BigInt
+  items                 String
+  tools                 String
+  village               String
+}
+
+model prefixes {
+  server_id String  @id
+  prefix    String?
+}
+
+model purchase_model {
+  purchase_id   String  @id @db.Uuid
+  purchase_data String?
+}
+
+model server_vars {
+  server_id                 BigInt  @id @default(autoincrement())
+  welcome_channel           BigInt?
+  disabled_commands         BigInt?
+  welcome_status            String?
+  aliases                   String?
+  antinuke_status           String?
+  antinuke_whitelisted      String? @default("[]")
+  antinuke_whitelisted_bots String? @default("[]")
+  antinuke_admins           String? @default("[]")
+  antinuke_config           String?
+  vc_bans                   String? @default("{}")
+  join_whitelist            BigInt? @default(0)
+  pay_whitelist             String? @default("blacklisted")
+  embeds                    String? @default("{}")
+  forcenicks                String? @default("{}")
+  welcome_config            String? @default("{}")
+  goodbye_config            String? @default("{}")
+  rank_config               String? @default("{}")
+  voicemaster_config        String? @default("{}")
+  config                    String? @default("{}")
+  boost_config              String
+  cases                     String
+  starboard_config          String
+  moderation_messages       String
+  currency_config           String
+  new_antinuke_config       String
+  muted_module              String
+  vanity_module             String
+  autoresponders_config     String
+  antiraid_config           String
+  giveaway_config           String
+  button_config             String
+  purchase_log              String
+  rc_config                 String
+}

@@ -2,10 +2,10 @@ import { cn } from "@/lib/utils";
 import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
 import moment from "moment";
 import Image from "next/image";
-import AppTag from "./app-tag";
-import { Card, CardContent } from "./card";
-import { DialogBox } from "./dialog";
-import Profile from "./profile";
+import AppTag from "./ui/app-tag";
+import { Card, CardContent } from "./ui/card";
+import { DialogBox } from "./ui/dialog";
+import Profile from "./ui/profile";
 
 export default function Embed({
   children,

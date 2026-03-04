@@ -1,6 +1,6 @@
-import { Button } from "@/app/components/button";
-import { DialogBox, DialogTrigger } from "@/app/components/dialog";
-import { Input } from "@/app/components/input";
+import { Button } from "@/components/ui/button";
+import { DialogBox, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { CategoryName, Command } from "@/lib/resources";
 import { cn } from "@/lib/utils";
 import _ from "lodash";

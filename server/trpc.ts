@@ -8,10 +8,11 @@
  * @see https://trpc.io/docs/v11/procedures
  */
 
-import { initTRPC } from "@trpc/server";
+import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
+import type { Context } from "./context";
 
-const t = initTRPC.create({
+const t = initTRPC.context<Context>().create({
   /**
    * @see https://trpc.io/docs/v11/data-transformers
    */
@@ -22,6 +23,13 @@ const t = initTRPC.create({
   errorFormatter({ shape }) {
     return shape;
   },
+});
+
+const isAuthed = t.middleware(({ next, ctx }) => {
+  if (!ctx.userId) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({ ctx });
 });
 
 export const createCallerFactory = t.createCallerFactory;
@@ -37,6 +45,12 @@ export const router = t.router;
  * @see https://trpc.io/docs/v11/procedures
  **/
 export const publicProcedure = t.procedure;
+
+/**
+ * Create a protected procedure
+ * @see https://trpc.io/docs/v11/procedures
+ **/
+export const protectedProcedure = t.procedure.use(isAuthed);
 
 /**
  * @see https://trpc.io/docs/v11/merging-routers

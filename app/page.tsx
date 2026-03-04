@@ -3,9 +3,9 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 
-import Embed from "@/app/components/embed";
-import Navbar from "@/app/components/navbar";
-import { WavyBackground } from "@/app/components/wavy-background";
+import Embed from "@/components/embed";
+import Navbar from "@/components/navbar";
+import { WavyBackground } from "@/components/wavy-background";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { transition } from "@/lib/constants";
 import { trpc } from "@/lib/trpc";
@@ -20,11 +20,11 @@ import {
   BsTools
 } from "react-icons/bs";
 import { FaGamepad, FaVolumeHigh } from "react-icons/fa6";
-import { Button } from "./components/button";
-import { Card, CardContent } from "./components/card";
-import NowPlaying from "./components/demo/now-playing";
-import Footer from "./components/footer";
-import HeroSection from "./components/hero-section";
+import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
+import NowPlaying from "../components/now-playing";
+import Footer from "../components/footer";
+import HeroSection from "../components/hero-section";
 
 export default function Home() {
   const isMobile = useIsMobile();

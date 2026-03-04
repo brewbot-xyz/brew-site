@@ -22,20 +22,20 @@ const buttonVariants = cva(
           "border-1 border-red-700 bg-gradient-to-b from-red-500/50 to-red-900/50 text-red-300",
       },
       size: {
-        sm: "rounded-md px-2 py-1",
-        md: "h-10 px-6 py-4",
+        sm: "px-2 py-1",
+        md: "h-10 p-4",
         lg: "h-11 text-lg px-4.5 py-6.5",
         icon: "size-10 p-2",
       },
       rounded: {
-        xl: "rounded-2xl",
+        md: "rounded-md",
         none: "rounded-none",
       },
     },
     defaultVariants: {
       variant: "primary",
       size: "md",
-      rounded: "xl",
+      rounded: "md",
     },
   },
 );

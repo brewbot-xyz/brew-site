@@ -1,7 +1,7 @@
 import { motion, useAnimate } from "motion/react";
 import Link from "next/link";
 import { BsChevronRight, BsPlusLg } from "react-icons/bs";
-import { Button } from "./button";
+import { Button } from "./ui/button";
 import CardTrack from "./card-track";
 import { GrowLogo } from "./grow-logo";
 import ScrollIndicator from "./icons/scroll-indicator";

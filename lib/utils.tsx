@@ -10,8 +10,19 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function absoluteUrl(path: string) {
+export function absoluteUrl(path: string = "/") {
   return `${process.env.NEXT_PUBLIC_APP_URL}${path}`;
+}
+
+export function generateRandomString() {
+  let randomString = "";
+  const randomNumber = Math.floor(Math.random() * 10);
+
+  for (let i = 0; i < 20 + randomNumber; i++) {
+    randomString += String.fromCharCode(33 + Math.floor(Math.random() * 94));
+  }
+
+  return randomString;
 }
 
 export function parseEmoji(text: string, size = 20, key?: string) {
