@@ -20,16 +20,15 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "types": ["./cloudflare-env.d.ts", "node"]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "eslint.config.mjs",
-    "prettier.config.mjs",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "generated", "dist", "build"]
+  "exclude": ["node_modules"]
 }
