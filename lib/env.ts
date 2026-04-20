@@ -3,13 +3,13 @@ import { z } from "zod";
 
 if (process.env.NEXT_PUBLIC_APP_ENV != null) {
   console.warn(
-    "[env] NEXT_PUBLIC_APP_ENV is ignored and overridden by NEXTJS_ENV.",
+    "[env] NEXT_PUBLIC_APP_ENV is ignored and overridden by NODE_ENV.",
   );
 }
 
 export const env = createEnv({
   server: {
-    NEXTJS_ENV: z
+    NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
     HOSTNAME: z.string().default("0.0.0.0"),
@@ -24,7 +24,7 @@ export const env = createEnv({
     NEXT_PUBLIC_APP_ENV: z.enum(["development", "test", "production"]),
   },
   runtimeEnv: {
-    NEXTJS_ENV: process.env.NEXTJS_ENV,
+    NODE_ENV: process.env.NODE_ENV,
     HOSTNAME: process.env.HOSTNAME,
     PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : undefined,
     DISCORD_TOKEN: process.env.DISCORD_TOKEN,
@@ -47,7 +47,7 @@ export const env = createEnv({
 
       return keepAliveTimeout;
     })(),
-    NEXT_PUBLIC_APP_ENV: process.env.NEXTJS_ENV,
+    NEXT_PUBLIC_APP_ENV: process.env.NODE_ENV,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
   emptyStringAsUndefined: true,

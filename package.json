@@ -17,13 +17,10 @@
     "check:unsafe": "biome check --write --unsafe .",
     "check:write": "biome check --write .",
     "dev": "next dev --turbo --turbopack",
+    "preview": "next build && next start",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "prepare": "husky",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.11",
@@ -79,7 +76,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.0",
-    "@opennextjs/cloudflare": "^1.19.1",
     "@tailwindcss/postcss": "^4.2.1",
     "@tailwindcss/typography": "^0.5.19",
     "@types/lodash": "^4.17.24",

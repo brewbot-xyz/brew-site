@@ -56,7 +56,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {env.NEXTJS_ENV !== "production" && (
+      {env.NEXT_PUBLIC_APP_ENV !== "production" && (
         <head>
           <Script
             crossOrigin="anonymous"

@@ -59,9 +59,7 @@ export default function Providers(
   const [trpcClient] = useState(() =>
     createTRPCClient<AppRouter>({
       links: [
-        ...(process.env.NEXT_PUBLIC_APP_ENV === "development"
-          ? [loggerLink()]
-          : []),
+        ...(env.NEXT_PUBLIC_APP_ENV === "development" ? [loggerLink()] : []),
         httpBatchLink({
           transformer: SuperJSON,
           url: getUrl(),
